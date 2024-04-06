@@ -1,4 +1,7 @@
-import { Box, Button, Container, Typography } from "@mui/joy";
+import Box from "@mui/joy/Box";
+import Button from "@mui/joy/Button";
+import Container from "@mui/joy/Container";
+import Typography from "@mui/joy/Typography";
 
 export default function ErrorPage() {
     return (
@@ -12,7 +15,7 @@ export default function ErrorPage() {
             }}
         >
             <Container>
-                <Typography level="h1">404</Typography>
+                <Typography level="h1">404 </Typography>
                 <Typography level="h4">The page you’re looking for doesn’t exist.</Typography>
                 <Button>Back Home</Button>
             </Container>
