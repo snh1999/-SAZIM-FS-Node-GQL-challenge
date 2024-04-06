@@ -24,7 +24,7 @@ export default function LoginPage() {
                 </CenteredElement>
 
                 <Typography
-                    endDecorator={<Link to="/sign-up">Sign up</Link>}
+                    endDecorator={<Link to="/register">Sign up</Link>}
                     fontSize="md"
                     sx={{ alignSelf: "center" }}
                 >
