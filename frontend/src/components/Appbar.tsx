@@ -1,8 +1,16 @@
 import * as React from "react";
 import { useColorScheme } from "@mui/joy/styles";
-import CssBaseline from "@mui/joy/CssBaseline";
 import Button from "@mui/joy/Button";
 import { Typography } from "@mui/joy";
+
+export default function AppBar() {
+    return (
+        <nav style={{ display: "flex", justifyContent: "space-between" }}>
+            <Logo />
+            <ModeToggle />
+        </nav>
+    );
+}
 
 function ModeToggle() {
     const { mode, setMode } = useColorScheme();
@@ -51,15 +59,5 @@ function Logo() {
         >
             Teebay
         </Typography>
-    );
-}
-
-export default function MyAppBar() {
-    return (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Logo />
-            <ModeToggle />
-            <CssBaseline />
-        </div>
     );
 }
