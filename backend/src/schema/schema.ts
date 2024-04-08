@@ -1,24 +1,14 @@
 import { GraphQLID, GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
-import { UserType, userMutation, userQuery } from "../user";
+import { userMutation, userQuery } from "../user";
 
-const users = [
-    {
-        id: "1",
-        firstName: "John",
-        lastName: "Doe",
-        email: "F6 DataGridViewCellStyle",
-        phone: "555-555-5555",
-        address: "123 Main St, New York, NY 10001",
-    },
-    {
-        id: "2",
-        firstName: "Jane",
-        lastName: "Doe",
-        email: "F6CellStyle",
-        phone: "555-555-5555",
-        address: "123 Main St, New York, NY 10001",
-    },
-];
+// {
+//     id: "1",
+//     firstName: "John",
+//     lastName: "Doe",
+//     email: "F6 DataGridViewCellStyle",
+//     phone: "555-555-5555",
+//     address: "123 Main St, New York, NY 10001",
+// }
 
 const products = [
     {
@@ -68,12 +58,6 @@ const ProductType = new GraphQLObjectType({
         description: { type: GraphQLString },
         price: { type: GraphQLString },
         summary: { type: GraphQLString },
-        owner: {
-            type: UserType,
-            resolve(parent, args) {
-                return users.find((user) => user.id == parent.ownerId);
-            },
-        },
     }),
 });
 

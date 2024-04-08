@@ -2,6 +2,7 @@ import express from "express";
 import { createHandler } from "graphql-http/lib/use/express";
 
 import schema from "./schema/schema";
+import { authMiddleware } from "./middleware/auth.middleware";
 
 const { ruruHTML } = require("ruru/server");
 require("dotenv").config();
@@ -10,11 +11,12 @@ const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 // app.use(express.json())
+app.use(authMiddleware);
 // Create and use the GraphQL handler.
 app.all(
     "/graphql",
     createHandler({
-        schema: schema,
+        schema,
     })
 );
 

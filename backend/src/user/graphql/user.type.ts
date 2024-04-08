@@ -12,4 +12,13 @@ const UserType = new GraphQLObjectType({
     }),
 });
 
+export const AuthResponseType = new GraphQLObjectType({
+    name: "LoginToken",
+    fields: {
+        id: { type: GraphQLID },
+        token: { type: GraphQLString },
+        message: { type: GraphQLString },
+    },
+});
+
 export default UserType;

@@ -1,78 +1,50 @@
-import { GraphQLID, GraphQLNonNull, GraphQLString, GraphQLFieldConfig } from "graphql";
 import UserType from "./user.type";
-import { prismaClient } from "../../config/db";
-import { FieldConfigGraphQL } from "../../constants";
+import { FieldConfigGraphQL, IDGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
+import UserService from "../service/user.service";
 
-// move the definition from field to separate variables
-
-const addUser: FieldConfigGraphQL = {
+// TODO - add error handling
+const createUser: FieldConfigGraphQL = {
     type: UserType,
     args: {
-        firstName: { type: GraphQLNonNull(GraphQLString) },
-        lastName: { type: GraphQLString },
-        email: { type: GraphQLNonNull(GraphQLString) },
-        phone: { type: GraphQLNonNull(GraphQLString) },
-        address: { type: GraphQLString },
-        password: { type: GraphQLNonNull(GraphQLString) },
+        firstName: NonNullStringGQ,
+        lastName: StringGQ,
+        email: NonNullStringGQ,
+        phone: NonNullStringGQ,
+        address: StringGQ,
+        password: NonNullStringGQ,
     },
-    resolve(parent, args) {
-        const { firstName, lastName, password, email, phone, address } = args;
-
-        return prismaClient.user.create({
-            data: {
-                firstName,
-                lastName,
-                password,
-                email,
-                phone,
-                address,
-            },
-        });
+    resolve(_, args) {
+        return UserService.createUser(args);
     },
 };
 
-export const updateUser: GraphQLFieldConfig<any, any, any> = {
+export const updateUser: FieldConfigGraphQL = {
     type: UserType,
     args: {
-        firstName: { type: GraphQLString },
-        lastName: { type: GraphQLString },
-        email: { type: GraphQLString },
-        phone: { type: GraphQLString },
-        address: { type: GraphQLString },
+        id: IDGQ,
+        firstName: StringGQ,
+        lastName: StringGQ,
+        email: StringGQ,
+        phone: StringGQ,
+        address: StringGQ,
     },
-    resolve(parent, args) {
-        const { firstName, lastName, email, phone, address } = args;
-        return prismaClient.user.update({
-            where: {
-                id: args.id,
-            },
-            data: {
-                firstName,
-                lastName,
-                email,
-                phone,
-                address,
-            },
-        });
+    resolve(_, args) {
+        return UserService.updateUser(args.id, args);
     },
 };
 
-const deleteUser: GraphQLFieldConfig<any, any, any> = {
+const deleteUser: FieldConfigGraphQL = {
     type: UserType,
     args: {
-        id: { type: GraphQLNonNull(GraphQLID) },
+        id: IDGQ,
     },
-    resolve(parent, args) {
-        return prismaClient.user.delete({
-            where: {
-                id: args.id,
-            },
-        });
+    resolve(_, args) {
+        return UserService.deleteUser(args.id);
     },
 };
 
 export default {
-    addUser,
+    createUser,
     updateUser,
     deleteUser,
 };
