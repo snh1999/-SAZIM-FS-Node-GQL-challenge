@@ -1,4 +1,5 @@
 import { GraphQLID, GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString } from "graphql";
+import { UserType, userMutation, userQuery } from "../user";
 
 const users = [
     {
@@ -58,18 +59,6 @@ const products = [
     },
 ];
 
-const UserType = new GraphQLObjectType({
-    name: "User",
-    fields: () => ({
-        id: { type: GraphQLID },
-        firstName: { type: GraphQLString },
-        lastName: { type: GraphQLString },
-        email: { type: GraphQLString },
-        phone: { type: GraphQLString },
-        address: { type: GraphQLString },
-    }),
-});
-
 const ProductType = new GraphQLObjectType({
     name: "Product",
     fields: () => ({
@@ -88,20 +77,10 @@ const ProductType = new GraphQLObjectType({
     }),
 });
 
-const RootQuery = new GraphQLObjectType({
-    name: "RootQueryType",
+const query = new GraphQLObjectType({
+    name: "Query",
     fields: {
-        user: {
-            type: UserType,
-            args: { id: { type: GraphQLID } },
-            resolve(parent, args) {
-                return users.find((user) => user.id === args.id);
-            },
-        },
-        users: {
-            type: new GraphQLList(UserType),
-            resolve: () => users,
-        },
+        ...userQuery,
         products: {
             type: new GraphQLList(ProductType),
             resolve: () => products,
@@ -116,8 +95,16 @@ const RootQuery = new GraphQLObjectType({
     },
 });
 
+const mutation = new GraphQLObjectType({
+    name: "Mutation",
+    fields: {
+        ...userMutation,
+    },
+});
+
 const schema = new GraphQLSchema({
-    query: RootQuery,
+    query,
+    mutation,
 });
 
 export default schema;
