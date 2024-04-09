@@ -1,27 +1,33 @@
 import Input from "@mui/joy/Input";
-import InputFeedBack from "./InputFeedback";
 import IconButton from "@mui/joy/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { InputFeedbackContainer } from "../InputFeedbackContainer";
 
 interface Props {
-    getInputFeedback(value: string): string;
-    value: string;
-    setValue: (value: string) => void;
+    id: string;
     placeholder?: string;
 }
 
-export default function PasswordFieldInput({ getInputFeedback, value, setValue, placeholder = "Password" }: Props) {
+export default function FormPasswordInput({ id, placeholder = "Password" }: Props) {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
 
+    const {
+        register,
+        formState: { errors },
+    } = useFormContext();
+    const error = errors[id]?.message ?? "";
+
     return (
-        <InputFeedBack getInputFeedback={getInputFeedback} value={value}>
+        <InputFeedbackContainer message={error}>
             <Input
+                id={id}
                 type={showPassword ? "text" : "password"}
                 endDecorator={
                     <IconButton
@@ -35,11 +41,8 @@ export default function PasswordFieldInput({ getInputFeedback, value, setValue, 
                 variant="outlined"
                 size="lg"
                 placeholder={placeholder}
-                value={value}
-                onChange={(event) => setValue(event.target.value)}
+                {...register(id)}
             />
-            {/* TODO - password repeat */}
-            {/* TODO - use the value change on blur */}
-        </InputFeedBack>
+        </InputFeedbackContainer>
     );
 }

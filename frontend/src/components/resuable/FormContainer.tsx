@@ -1,16 +1,25 @@
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
+import { WarningAlert } from "./WarningAlert";
 
 interface FormContainterProps {
     children: React.ReactNode;
     border: "outlined" | "plain" | "soft";
     titleText: string;
     containterWidth?: number;
+    errorMessage?: string;
 }
 
-export default function FormContainer({ children, border, titleText, containterWidth = 50 }: FormContainterProps) {
+export default function FormContainer({
+    children,
+    errorMessage,
+    border,
+    titleText,
+    containterWidth = 50,
+}: FormContainterProps) {
     return (
         <>
+            {errorMessage && <WarningAlert alertText={errorMessage} />}
             <Typography sx={{ textAlign: "center" }} level="h2">
                 {titleText}
             </Typography>
