@@ -1,8 +1,8 @@
 import { createRoutesFromElements, createBrowserRouter, Route } from "react-router-dom";
-import ErrorPage from "./ErrorPage";
-import MainLayout from "./layout/Mainlayout";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
+import ErrorPage from "../pages/ErrorPage";
+import MainLayout from "../pages/layout/Mainlayout";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
