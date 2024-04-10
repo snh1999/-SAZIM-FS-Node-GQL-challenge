@@ -1,11 +1,10 @@
-import { createHmac } from "crypto";
-import { prismaClient } from "../../config/db";
-import { UserDto } from "./dto";
-import { LoginDto } from "./dto/auth.dto";
 import JWT from "jsonwebtoken";
+import { createHmac } from "crypto";
+
+import { UserDto, LoginDto } from "./dto";
+import { prismaClient } from "../../config/db";
 import { JWT_SECRET_KEY } from "../../constants/values";
-import { inputValidationCallback } from "../../utils/validator";
-import { getPrismaAppError } from "../../utils/prismaErrorHandler";
+import { inputValidationCallback, getPrismaAppError } from "../../utils";
 
 async function getUserById(id: string) {
     return prismaClient.user.findUnique({

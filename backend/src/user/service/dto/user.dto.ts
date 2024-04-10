@@ -5,7 +5,7 @@ export class UserDto {
     @IsNotEmpty()
     firstName: string;
 
-    @IsAlpha()
+    @IsString()
     @IsOptional()
     lastName?: string;
 

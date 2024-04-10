@@ -1,8 +1,10 @@
 import { GraphQLError } from "graphql";
 
 export function errorHandler(error: Error | GraphQLError | AppError) {
-    console.log(error);
-    if (error.message.length > 100) return new AppError("Internal Server Error");
+    if (error.message.length > 100) {
+        console.log(error);
+        return new AppError("Internal Server Error");
+    }
     return error;
 }
 
