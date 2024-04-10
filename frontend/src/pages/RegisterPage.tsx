@@ -1,8 +1,9 @@
 import Box from "@mui/joy/Box";
-import Input from "@mui/joy/Input";
+import CircularProgress from "@mui/joy/CircularProgress";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormContainer from "../components/resuable/FormContainer";
 import CenteredElement from "../components/resuable/CenteredElement";
 
@@ -12,8 +13,13 @@ import { FormInput } from "../components/resuable/form_input/InputFeedback";
 
 import FormPasswordInput from "../components/resuable/form_input/PasswordField";
 import { registerSchema } from "../config/yup/schema/register";
+import { useMutation } from "@apollo/client";
+import { REGISTER_MUTATION } from "../graphql/mutations";
+import { CustomSnackBar } from "../components/resuable/WarningAlert";
 
 export default function RegisterPage() {
+    const navigate = useNavigate();
+
     const methods = useForm({
         defaultValues: {
             firstName: "",
@@ -27,16 +33,37 @@ export default function RegisterPage() {
     });
     const { handleSubmit } = methods;
 
+    const [register, { loading, error, data }] = useMutation(REGISTER_MUTATION);
+
     const handleRegister = (data: any) => {
-        console.log(data);
+        register({
+            variables: {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                address: data.address,
+                email: data.email,
+                phone: data.phone,
+                password: data.password,
+            },
+        }).then((response) => {
+            navigate("/login");
+        });
     };
 
+    if (loading) {
+        return <CircularProgress size="lg" />;
+    }
     return (
         <div>
+            {data && (
+                <CustomSnackBar
+                    alertText="Registered Successfully"
+                    color="success"
+                    startDecorator={<CheckCircleIcon />}
+                ></CustomSnackBar>
+            )}
             <FormProvider {...methods}>
-                <FormContainer border="outlined" titleText="REGISTER">
-                    {/* TODO- can not be numbers or special characters */}
-
+                <FormContainer border="outlined" titleText="REGISTER" errorMessage={error?.message}>
                     <Box sx={{ display: "flex", gap: 2 }}>
                         <FormInput styles={{ width: "49%" }} id="firstName" placeholder="First Name" type="text" />
                         <FormInput styles={{ width: "49%" }} id="lastName" placeholder="Last Name" type="text" />
