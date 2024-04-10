@@ -3,20 +3,26 @@ import { createHandler } from "graphql-http/lib/use/express";
 
 import schema from "./schema/schema";
 import { authMiddleware } from "./middleware/auth.middleware";
+import { GraphQLError } from "graphql";
+import { errorHandler } from "./utils/errorHandler";
 
 const { ruruHTML } = require("ruru/server");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
-// app.use(express.json())
+app.use(express.json());
 app.use(authMiddleware);
+app.use(cors());
 // Create and use the GraphQL handler.
+
 app.all(
     "/graphql",
     createHandler({
         schema,
+        formatError: errorHandler,
     })
 );
 
