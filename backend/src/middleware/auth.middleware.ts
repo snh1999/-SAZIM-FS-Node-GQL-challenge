@@ -10,16 +10,16 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
             try {
                 const decodedToken: any = JWT.verify(token, JWT_SECRET_KEY);
                 if (decodedToken) {
-                    req.isAuthenticaed = true;
-                    req.user = decodedToken.id;
+                    req.isAuthenticated = true;
+                    req.userId = decodedToken.id;
                     return next();
                 }
             } catch (_) {
-                req.isAuthenticaed = false;
+                req.isAuthenticated = false;
                 return next();
             }
         }
     }
-    req.isAuthenticaed = false;
+    req.isAuthenticated = false;
     return next();
 }
