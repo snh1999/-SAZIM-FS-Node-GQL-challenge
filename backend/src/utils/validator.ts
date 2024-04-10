@@ -1,5 +1,6 @@
 import { ClassConstructor, plainToClass } from "class-transformer";
 import { validate } from "class-validator";
+import { AppError } from "./errorHandler";
 
 /**
  *
@@ -15,13 +16,23 @@ import { validate } from "class-validator";
  * ```
  */
 export async function dtoValidator<T extends ClassConstructor<any>>(dto: T, obj: Object) {
-    console.log(typeof obj);
     // tranform the literal object to class object
     const objInstance = plainToClass(dto, obj);
     // validating and check the errors, throw the errors if exist
     const errors = await validate(objInstance);
     // errors is an array of validation errors
     if (errors.length > 0) {
-        throw new Error(`Input Validation Failed for : ${errors.map(({ property }) => property)}`);
+        return new AppError(`Invalid input: ${errors.map(({ property }) => property)}`);
     }
+}
+
+export async function inputValidationCallback<T extends ClassConstructor<any>>(
+    dto: T,
+    obj: Object,
+    callback: Function
+) {
+    const error = await dtoValidator(dto, obj);
+    if (error !== undefined) return error;
+
+    return callback();
 }

@@ -4,18 +4,23 @@ import { PartialUserDto, UserDto } from "./dto";
 import { LoginDto } from "./dto/auth.dto";
 import JWT from "jsonwebtoken";
 import { JWT_SECRET_KEY } from "../../constants/values";
-import { dtoValidator } from "../../utils/validator";
+import { inputValidationCallback } from "../../utils/validator";
+import { prismaErrorHandler } from "../../utils/prismaErrorHandler";
 
-function createUser(dto: UserDto) {
-    dtoValidator(UserDto, dto);
-
-    const hashedPassword = _getHashedPassword(dto.password);
-    return prismaClient.user.create({
-        data: {
-            ...dto,
-            password: hashedPassword,
-        },
-    });
+async function createUser(dto: UserDto) {
+    return prismaErrorHandler(async () =>
+        inputValidationCallback(UserDto, dto, async () => {
+            const hashedPassword = _getHashedPassword(dto.password);
+            return Promise.resolve(
+                prismaClient.user.create({
+                    data: {
+                        ...dto,
+                        password: hashedPassword,
+                    },
+                })
+            );
+        })
+    );
 }
 
 function updateUser(id: string, dto: PartialUserDto) {
