@@ -1,57 +1,97 @@
 import Box from "@mui/joy/Box";
-import Input from "@mui/joy/Input";
+import CircularProgress from "@mui/joy/CircularProgress";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import getRegisterPasswordFeedback from "../utils/validations/registerPassword";
-import getPasswordRepeatFeedback from "../utils/validations/passwordRepeat";
-import PasswordFieldInput from "../components/resuable/PasswordField";
+import { Link, useNavigate } from "react-router-dom";
 import FormContainer from "../components/resuable/FormContainer";
 import CenteredElement from "../components/resuable/CenteredElement";
 
-export default function RegisterPage() {
-    const [password, setPassword] = useState("");
+import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormInput } from "../components/resuable/form_input/InputFeedback";
 
+import FormPasswordInput from "../components/resuable/form_input/PasswordField";
+import { registerSchema } from "../config/yup/schema/register";
+import { useMutation } from "@apollo/client";
+import { REGISTER_MUTATION } from "../graphql/mutations";
+import { CustomSnackBar } from "../components/resuable/WarningAlert";
+
+export default function RegisterPage() {
+    const navigate = useNavigate();
+
+    const methods = useForm({
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            address: "",
+            email: "",
+            password: "",
+            phone: "",
+        },
+        resolver: yupResolver(registerSchema),
+    });
+    const { handleSubmit } = methods;
+
+    const [register, { loading, error, data }] = useMutation(REGISTER_MUTATION);
+
+    const handleRegister = (data: any) => {
+        register({
+            variables: {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                address: data.address,
+                email: data.email,
+                phone: data.phone,
+                password: data.password,
+            },
+        }).then((response) => {
+            navigate("/login");
+        });
+    };
+
+    if (loading) {
+        return <CircularProgress size="lg" />;
+    }
     return (
         <div>
-            <FormContainer border="outlined" titleText="REGISTER">
-                {/* TODO- can not be numbers or special characters */}
+            {data && (
+                <CustomSnackBar
+                    alertText="Registered Successfully"
+                    color="success"
+                    startDecorator={<CheckCircleIcon />}
+                ></CustomSnackBar>
+            )}
+            <FormProvider {...methods}>
+                <FormContainer border="outlined" titleText="REGISTER" errorMessage={error?.message}>
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                        <FormInput styles={{ width: "49%" }} id="firstName" placeholder="First Name" type="text" />
+                        <FormInput styles={{ width: "49%" }} id="lastName" placeholder="Last Name" type="text" />
+                    </Box>
 
-                <Box sx={{ display: "flex", gap: 2 }}>
-                    <Input size="lg" sx={{ flex: 1 }} name="firstName" type="text" placeholder="First Name" />
-                    <Input size="lg" sx={{ flex: 1 }} name="lastName" type="text" placeholder="Last Name" />
-                </Box>
+                    <FormInput id="address" type="text" placeholder="Address" />
 
-                <Input size="lg" name="address" type="text" placeholder="Address" />
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                        <FormInput styles={{ width: "49%" }} id="email" placeholder="Email" type="email" />
+                        <FormInput styles={{ width: "49%" }} id="phone" placeholder="Phone" type="phone" />
+                    </Box>
 
-                <Box sx={{ display: "flex", gap: 2 }}>
-                    <Input size="lg" sx={{ flex: 1 }} name="email" type="email" placeholder="Email" />
-                    <Input size="lg" sx={{ flex: 1 }} name="phone" type="phone" placeholder="Phone" />
-                </Box>
+                    <FormPasswordInput id="password" placeholder="Password" />
+                    <FormPasswordInput id="confirmPassword" placeholder="ConfirmPassword" />
 
-                <PasswordFieldInput
-                    getInputFeedback={getRegisterPasswordFeedback}
-                    value={password}
-                    setValue={setPassword}
-                />
+                    <CenteredElement>
+                        <Button onClick={handleSubmit(handleRegister)}>REGISTER</Button>
+                    </CenteredElement>
 
-                <PasswordFieldInput
-                    getInputFeedback={(value) => getPasswordRepeatFeedback(value, password)}
-                    value={password}
-                    setValue={setPassword}
-                    placeholder="Repeat Password"
-                />
-                <CenteredElement>
-                    <Button size="lg" sx={{ mt: 2 }} type="submit">
-                        REGISTER
-                    </Button>
-                </CenteredElement>
-
-                <Typography endDecorator={<Link to="/login">Sign In</Link>} fontSize="md" sx={{ alignSelf: "center" }}>
-                    Already have an account?
-                </Typography>
-            </FormContainer>
+                    <Typography
+                        endDecorator={<Link to="/login">Sign In</Link>}
+                        fontSize="md"
+                        sx={{ alignSelf: "center" }}
+                    >
+                        Already have an account?
+                    </Typography>
+                </FormContainer>
+            </FormProvider>
         </div>
     );
 }
