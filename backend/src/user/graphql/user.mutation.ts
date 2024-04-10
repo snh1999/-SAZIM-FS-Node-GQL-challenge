@@ -1,8 +1,7 @@
 import UserType from "./user.type";
-import { FieldConfigGraphQL, IDGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
+import { FieldConfigGraphQL, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
 import UserService from "../service/user.service";
 
-// TODO - add error handling
 const createUser: FieldConfigGraphQL = {
     type: UserType,
     args: {
@@ -18,33 +17,6 @@ const createUser: FieldConfigGraphQL = {
     },
 };
 
-export const updateUser: FieldConfigGraphQL = {
-    type: UserType,
-    args: {
-        id: IDGQ,
-        firstName: StringGQ,
-        lastName: StringGQ,
-        email: StringGQ,
-        phone: StringGQ,
-        address: StringGQ,
-    },
-    resolve(_, args) {
-        return UserService.updateUser(args.id, args);
-    },
-};
-
-const deleteUser: FieldConfigGraphQL = {
-    type: UserType,
-    args: {
-        id: IDGQ,
-    },
-    resolve(_, args) {
-        return UserService.deleteUser(args.id);
-    },
-};
-
 export default {
     createUser,
-    updateUser,
-    deleteUser,
 };

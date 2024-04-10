@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, IsString, IsNotEmpty, IsPhoneNumber, IsAlpha, IsMobilePhone } from "class-validator";
+import { IsEmail, IsOptional, IsString, IsNotEmpty, IsAlpha, IsMobilePhone } from "class-validator";
 
 export class UserDto {
     @IsAlpha()
@@ -24,30 +24,4 @@ export class UserDto {
     @IsString()
     @IsNotEmpty()
     password: string;
-}
-
-export class PartialUserDto {
-    @IsAlpha()
-    @IsOptional()
-    firstName?: string;
-
-    @IsAlpha()
-    @IsOptional()
-    lastName?: string;
-
-    @IsEmail()
-    @IsOptional()
-    email?: string;
-
-    @IsPhoneNumber()
-    @IsOptional()
-    phone?: string;
-
-    @IsString()
-    @IsOptional()
-    address?: string;
-
-    @IsString()
-    @IsOptional()
-    password?: string;
 }
