@@ -3,8 +3,8 @@ export {};
 declare global {
     namespace Express {
         interface Request {
-            user?: string;
-            isAuthenticaed?: boolean;
+            userId?: string;
+            isAuthenticated?: boolean;
         }
     }
 }

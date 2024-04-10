@@ -3,7 +3,6 @@ import { createHandler } from "graphql-http/lib/use/express";
 
 import schema from "./schema/schema";
 import { authMiddleware } from "./middleware/auth.middleware";
-import { GraphQLError } from "graphql";
 import { errorHandler } from "./utils/errorHandler";
 
 const { ruruHTML } = require("ruru/server");
@@ -23,6 +22,12 @@ app.all(
     createHandler({
         schema,
         formatError: errorHandler,
+        context: async (req, args) => {
+            return {
+                user: req.raw.userId,
+                isAuthenticated: req.raw.isAuthenticated,
+            };
+        },
     })
 );
 

@@ -1,3 +1,4 @@
-import { PartialUserDto, UserDto } from "./user.dto";
+import { UserDto } from "./user.dto";
+import { LoginDto } from "./auth.dto";
 
-export { PartialUserDto, UserDto };
+export { UserDto, LoginDto };

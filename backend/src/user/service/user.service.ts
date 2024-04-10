@@ -1,43 +1,30 @@
-import { createHmac } from "crypto";
-import { prismaClient } from "../../config/db";
-import { PartialUserDto, UserDto } from "./dto";
-import { LoginDto } from "./dto/auth.dto";
 import JWT from "jsonwebtoken";
+import { createHmac } from "crypto";
+
+import { UserDto, LoginDto } from "./dto";
+import { prismaClient } from "../../config/db";
 import { JWT_SECRET_KEY } from "../../constants/values";
-import { inputValidationCallback } from "../../utils/validator";
-import { prismaErrorHandler } from "../../utils/prismaErrorHandler";
+import { inputValidationCallback, getPrismaAppError } from "../../utils";
 
-async function createUser(dto: UserDto) {
-    return prismaErrorHandler(async () => inputValidationCallback(UserDto, dto, async () => _createUser(dto)));
-}
-
-async function _createUser(dto: UserDto) {
-    const hashedPassword = _getHashedPassword(dto.password);
-    return prismaClient.user.create({
-        data: {
-            ...dto,
-            password: hashedPassword,
+async function getUserById(id: string) {
+    return prismaClient.user.findUnique({
+        where: {
+            id,
         },
     });
 }
-
-function updateUser(id: string, dto: PartialUserDto) {
-    return prismaErrorHandler(async () =>
-        inputValidationCallback(PartialUserDto, dto, async () =>
-            prismaClient.user.update({
-                where: {
-                    id,
-                },
+async function createUser(dto: UserDto) {
+    return inputValidationCallback(UserDto, dto, async () => {
+        const hashedPassword = _getHashedPassword(dto.password);
+        return prismaClient.user
+            .create({
                 data: {
                     ...dto,
+                    password: hashedPassword,
                 },
             })
-        )
-    );
-}
-
-function deleteUser(id: string) {
-    return prismaErrorHandler(async () => prismaClient.user.delete({ where: { id } }));
+            .catch((error) => getPrismaAppError(error));
+    });
 }
 
 async function loginUser(dto: LoginDto) {
@@ -67,23 +54,8 @@ async function _getTokenObject(payload: { id: string; email: string }) {
     };
 }
 
-// async function sendCookie(res: Response, payload: Object) {
-//     const token = await _signToken(payload);
-//     const cookieOptions = {
-//       expires: new Date(new Date().getTime() + 30 * 1000),
-//       // sameSite: 'strict',
-//       httpOnly: true,
-//     };
-//     if (this.config.get('Environment') != 'DEV') cookieOptions['secure'] = true;
-//     res.cookie('token', token, cookieOptions);
-//     return {
-//       token,
-//       message: 'Logged In successfully',
-//     };
-//   }
-
 function _getHashedPassword(password: string) {
     return createHmac("sha256", password).digest("hex");
 }
 
-export default { createUser, updateUser, deleteUser, loginUser };
+export default { createUser, loginUser, getUserById };
