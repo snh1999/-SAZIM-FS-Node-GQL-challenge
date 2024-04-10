@@ -1,6 +1,6 @@
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { WarningAlert } from "./WarningAlert";
+import { CustomSnackBar } from "./WarningAlert";
 
 interface FormContainterProps {
     children: React.ReactNode;
@@ -18,8 +18,8 @@ export default function FormContainer({
     containterWidth = 50,
 }: FormContainterProps) {
     return (
-        <>
-            {errorMessage && <WarningAlert alertText={errorMessage} />}
+        <form onSubmit={(e) => e.preventDefault()}>
+            {errorMessage && <CustomSnackBar alertText={errorMessage} />}
             <Typography sx={{ textAlign: "center" }} level="h2">
                 {titleText}
             </Typography>
@@ -42,6 +42,6 @@ export default function FormContainer({
             >
                 {children}
             </Sheet>
-        </>
+        </form>
     );
 }

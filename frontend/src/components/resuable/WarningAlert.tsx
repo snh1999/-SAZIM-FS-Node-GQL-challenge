@@ -4,21 +4,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import WarningIcon from "@mui/icons-material/Warning";
 import { useState } from "react";
 
-export function WarningAlert({ alertText }: { alertText: string }) {
+interface Props {
+    alertText: string;
+    startDecorator?: React.ReactNode;
+    color?: "danger" | "primary" | "success" | "warning";
+}
+
+export function CustomSnackBar({ alertText, startDecorator, color = "danger" }: Props) {
     const [open, setOpen] = useState(true);
     return (
         <Snackbar
             autoHideDuration={4000}
             open={open}
             variant="solid"
-            color="danger"
+            color={color}
             anchorOrigin={{ vertical: "top", horizontal: "center" }}
             onClose={() => {
                 setOpen(false);
             }}
-            startDecorator={<WarningIcon />}
+            startDecorator={startDecorator ?? <WarningIcon />}
             endDecorator={
-                <IconButton size="sm" color="danger" variant="plain" onClick={() => setOpen(false)}>
+                <IconButton size="sm" variant="plain" onClick={() => setOpen(false)}>
                     <CloseIcon />
                 </IconButton>
             }
