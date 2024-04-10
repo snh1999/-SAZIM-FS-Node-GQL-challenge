@@ -8,38 +8,36 @@ import { inputValidationCallback } from "../../utils/validator";
 import { prismaErrorHandler } from "../../utils/prismaErrorHandler";
 
 async function createUser(dto: UserDto) {
-    return prismaErrorHandler(async () =>
-        inputValidationCallback(UserDto, dto, async () => {
-            const hashedPassword = _getHashedPassword(dto.password);
-            return Promise.resolve(
-                prismaClient.user.create({
-                    data: {
-                        ...dto,
-                        password: hashedPassword,
-                    },
-                })
-            );
-        })
-    );
+    return prismaErrorHandler(async () => inputValidationCallback(UserDto, dto, async () => _createUser(dto)));
+}
+
+async function _createUser(dto: UserDto) {
+    const hashedPassword = _getHashedPassword(dto.password);
+    return prismaClient.user.create({
+        data: {
+            ...dto,
+            password: hashedPassword,
+        },
+    });
 }
 
 function updateUser(id: string, dto: PartialUserDto) {
-    return prismaClient.user.update({
-        where: {
-            id,
-        },
-        data: {
-            ...dto,
-        },
-    });
+    return prismaErrorHandler(async () =>
+        inputValidationCallback(PartialUserDto, dto, async () =>
+            prismaClient.user.update({
+                where: {
+                    id,
+                },
+                data: {
+                    ...dto,
+                },
+            })
+        )
+    );
 }
 
 function deleteUser(id: string) {
-    return prismaClient.user.delete({
-        where: {
-            id,
-        },
-    });
+    return prismaErrorHandler(async () => prismaClient.user.delete({ where: { id } }));
 }
 
 async function loginUser(dto: LoginDto) {
@@ -47,7 +45,7 @@ async function loginUser(dto: LoginDto) {
     const user = await _findByEmail(email);
 
     if (!user || user.password !== _getHashedPassword(password)) {
-        throw new Error("Invalid Email or Password");
+        return new Error("Invalid Email or Password");
     }
     return _getTokenObject({ id: user.id, email: user.email });
 }
