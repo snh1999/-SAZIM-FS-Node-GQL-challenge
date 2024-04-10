@@ -1,13 +1,32 @@
 import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
 import { useColorScheme } from "@mui/joy/styles";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../config/context/auth_context";
+import { useNavigate } from "react-router-dom";
 
 export default function AppBar() {
+    const context = useContext(AuthContext);
+    const navigate = useNavigate();
+
     return (
         <nav style={{ display: "flex", justifyContent: "space-between" }}>
             <Logo />
-            <ModeToggle />
+            <span>
+                <ModeToggle />
+                {context.userData.token && (
+                    <Button
+                        color="danger"
+                        sx={{ margin: 1 }}
+                        onClick={() => {
+                            context.logout();
+                            navigate("/login");
+                        }}
+                    >
+                        Logout
+                    </Button>
+                )}
+            </span>
         </nav>
     );
 }
@@ -16,8 +35,6 @@ function ModeToggle() {
     const { mode, setMode } = useColorScheme();
     const [mounted, setMounted] = useState(false);
 
-    // necessary for server-side rendering
-    // because mode is undefined on the server
     useEffect(() => {
         setMounted(true);
     }, []);
