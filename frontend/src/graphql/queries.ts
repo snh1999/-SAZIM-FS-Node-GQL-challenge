@@ -8,3 +8,12 @@ export const LOGIN_QUERY = gql`
         }
     }
 `;
+
+export const GET_MY_PRODUCTS_QUERY = gql`
+    {
+        getMyProducts {
+            id
+            title
+        }
+    }
+`;

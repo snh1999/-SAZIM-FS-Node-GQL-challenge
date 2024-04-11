@@ -4,7 +4,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { InputFeedbackContainer } from "../InputFeedbackContainer";
+import { InputFeedbackContainer } from "../containers/InputFeedbackContainer";
 
 interface Props {
     id: string;

@@ -2,7 +2,7 @@ import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
 import { useColorScheme } from "@mui/joy/styles";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../config/context/auth_context";
+import { AuthContext } from "../../config/context/auth_context";
 import { useNavigate } from "react-router-dom";
 
 export default function AppBar() {

@@ -4,18 +4,18 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
 import { Link, useNavigate } from "react-router-dom";
-import FormContainer from "../components/resuable/FormContainer";
-import CenteredElement from "../components/resuable/CenteredElement";
+import FormContainer from "./components/resuable/containers/FormContainer";
+import PositionElement from "./components/resuable/containers/CenteredElement";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInput } from "../components/resuable/form_input/InputFeedback";
+import { FormInput } from "./components/resuable/form_input/InputFeedback";
 
-import FormPasswordInput from "../components/resuable/form_input/PasswordField";
+import FormPasswordInput from "./components/resuable/form_input/PasswordField";
 import { registerSchema } from "../config/yup/schema/register";
 import { useMutation } from "@apollo/client";
 import { REGISTER_MUTATION } from "../graphql/mutations";
-import { CustomSnackBar } from "../components/resuable/WarningAlert";
+import { CustomSnackBar } from "./components/resuable/WarningAlert";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -45,7 +45,7 @@ export default function RegisterPage() {
                 phone: data.phone,
                 password: data.password,
             },
-        }).then((response) => {
+        }).then((_) => {
             navigate("/login");
         });
     };
@@ -79,9 +79,9 @@ export default function RegisterPage() {
                     <FormPasswordInput id="password" placeholder="Password" />
                     <FormPasswordInput id="confirmPassword" placeholder="ConfirmPassword" />
 
-                    <CenteredElement>
+                    <PositionElement>
                         <Button onClick={handleSubmit(handleRegister)}>REGISTER</Button>
-                    </CenteredElement>
+                    </PositionElement>
 
                     <Typography
                         endDecorator={<Link to="/login">Sign In</Link>}
