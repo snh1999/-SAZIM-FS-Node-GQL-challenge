@@ -5,7 +5,7 @@ import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
 import { Link, useNavigate } from "react-router-dom";
 import FormContainer from "./components/resuable/containers/FormContainer";
-import PositionElement from "./components/resuable/containers/CenteredElement";
+import PositionElement from "./components/resuable/containers/PositionElement";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

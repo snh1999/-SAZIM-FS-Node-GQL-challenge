@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function ProductCard({ product }: Readonly<Props>) {
-    const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState(false);
     return (
         <Card sx={{ pl: 5, letterSpacing: 1 }} size="lg">
             <Sheet
@@ -22,11 +22,11 @@ export default function ProductCard({ product }: Readonly<Props>) {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "start",
-                    gap: 2,
+                    gap: 1,
                     borderRadius: "sm",
                 }}
             >
-                <Typography fontSize="1.8rem">{product.title}</Typography>
+                <Typography fontSize="1.7rem">{product.title}</Typography>
                 <Typography level="body-sm">Categories: {product.categories.join(", ")}</Typography>
                 <Typography level="body-sm">
                     Price: ${product.price} | Rent: ${product.rentPrice} {product.rentDuration}
@@ -43,8 +43,11 @@ export default function ProductCard({ product }: Readonly<Props>) {
                 <DeleteIcon />
             </IconButton>
 
-            <Typography fontSize="1.1rem" py={3} width="95%">
-                {product.description}
+            <Typography fontSize="1.1rem" py={1} width="95%">
+                {product.description.slice(0, 200)}
+                <Typography level="body-sm" color="primary">
+                    {product.description.length > 200 ? "...More Details" : ""}
+                </Typography>
             </Typography>
             <CardContent
                 sx={{ display: "flex", justifyContent: "space-between", letterSpacing: 0 }}

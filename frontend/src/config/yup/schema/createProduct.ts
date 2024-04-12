@@ -7,7 +7,7 @@ import { REQUIRED_FIELD_FEEDBACK, REQUIRED_NUMBER_FEEDBACK } from "../../../cons
 export const productCreationSchema = yup.object().shape({
     title: RequiredStringValidation,
     description: RequiredStringValidation,
-    category: yup.array(yup.mixed<Category>().oneOf(Object.values(Category))).required(REQUIRED_FIELD_FEEDBACK),
+    categories: yup.array(yup.mixed<Category>().oneOf(Object.values(Category))).required(REQUIRED_FIELD_FEEDBACK),
     price: yup.number().typeError(REQUIRED_NUMBER_FEEDBACK).positive().required(REQUIRED_FIELD_FEEDBACK),
     rentPrice: yup.number().typeError(REQUIRED_NUMBER_FEEDBACK).positive().required(REQUIRED_FIELD_FEEDBACK),
     rentDuration: yup

@@ -3,7 +3,7 @@ import Button from "@mui/joy/Button";
 
 import { Link, useNavigate } from "react-router-dom";
 import FormContainer from "./components/resuable/containers/FormContainer";
-import PositionElement from "./components/resuable/containers/CenteredElement";
+import PositionElement from "./components/resuable/containers/PositionElement";
 import FormPasswordInput from "./components/resuable/form_input/PasswordField";
 import { FormProvider, useForm } from "react-hook-form";
 import { FormInput } from "./components/resuable/form_input/InputFeedback";

@@ -17,6 +17,8 @@ export default function SelectEnum({ id, placeholder, options, multiple = true }
     } = useFormContext();
     const error = errors[id]?.message ?? "";
 
+    console.log(getValues(id));
+
     return (
         <InputFeedbackContainer message={error}>
             <Select
@@ -28,7 +30,7 @@ export default function SelectEnum({ id, placeholder, options, multiple = true }
                     <Box sx={{ display: "flex", gap: "0.5rem" }}>
                         {selected instanceof Array
                             ? selected.map((selectedOption) => (
-                                  <Chip variant="soft" color="primary">
+                                  <Chip key={selectedOption.value} variant="soft" color="primary">
                                       {selectedOption.label}
                                   </Chip>
                               ))

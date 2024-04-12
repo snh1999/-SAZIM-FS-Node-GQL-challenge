@@ -17,14 +17,22 @@ export default function PricesField() {
                     mx: 15,
                 }}
             >
-                <Box sx={{ width: "50%" }}>
-                    <Typography>Rent</Typography>
-                    <FormInput id="rentPrice" type="number" placeholder="$" inputStyles={{ width: "100%" }} />
-                </Box>
-                <Box sx={{ mt: 4 }}>
-                    <SelectEnum placeholder="Select Option" id="rentDuration" multiple={false} options={RentDuration} />
-                </Box>
+                <AddRent />
             </Box>
         </Sheet>
+    );
+}
+
+export function AddRent() {
+    return (
+        <>
+            <Box sx={{ width: "50%" }}>
+                <Typography>Rent</Typography>
+                <FormInput id="rentPrice" type="number" placeholder="$" inputStyles={{ width: "100%" }} />
+            </Box>
+            <Box sx={{ mt: 4 }}>
+                <SelectEnum placeholder="Select Option" id="rentDuration" multiple={false} options={RentDuration} />
+            </Box>
+        </>
     );
 }
