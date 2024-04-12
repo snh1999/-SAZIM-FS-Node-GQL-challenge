@@ -42,7 +42,18 @@ async function deleteProduct(userId: string, id: string) {
         .catch((error) => getPrismaAppError(error));
 }
 
-async function getProductById(id: string) {
+async function viewProduct(id: string) {
+    return prismaClient.product.update({
+        where: {
+            id,
+        },
+        data: {
+            view: { increment: 1 },
+        },
+    });
+}
+
+async function _getProductById(id: string) {
     return prismaClient.product.findUnique({
         where: {
             id,
@@ -63,11 +74,11 @@ async function getAllFromOwner(ownerId: string) {
 }
 
 async function _checkAuthorization(userId: string, productId: string) {
-    const product = await getProductById(productId);
+    const product = await _getProductById(productId);
     if (product && product.ownerId === userId) {
         return;
     }
     throw new AppError("Unauthorized", 401);
 }
 
-export default { createProduct, updateProduct, getProductById, getAllFromOwner, deleteProduct, getAllProducts };
+export default { createProduct, updateProduct, viewProduct, getAllFromOwner, deleteProduct, getAllProducts };

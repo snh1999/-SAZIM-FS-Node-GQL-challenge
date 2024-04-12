@@ -8,7 +8,7 @@ const getProduct: FieldConfigGraphQL = {
     type: ProductType,
     args: { id: IDGQ },
     resolve(_, args) {
-        return productService.getProductById(args.id);
+        return productService.viewProduct(args.id);
     },
 };
 

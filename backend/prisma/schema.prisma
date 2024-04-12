@@ -22,6 +22,8 @@ model User {
   address   String?
   phone     String
   products  Product[]
+
+  @@map("users")
 }
 
 enum Category {
@@ -43,15 +45,18 @@ enum RentDuration {
 }
 
 model Product {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
-  category    Category
+  category    Category[]
   description String
-  createdAt   DateTime @default(now())
-  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  owner       User       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId     String
 
   price        Int
   rentPrice    Int
   rentDuration RentDuration
+  view         Int          @default(0)
+
+  @@map("products")
 }
