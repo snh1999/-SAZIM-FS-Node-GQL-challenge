@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/joy";
 import { Category, RentDuration } from "../../constants/types/Product";
-import PositionElement from "../components/resuable/containers/PositionElement";
+import PositionElement from "../components/containers/PositionElement";
 import ViewProducts from "../components/products/ViewProducts";
 
 export default function MyProducts() {

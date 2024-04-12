@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { InputFeedbackContainer } from "../containers/InputFeedbackContainer";
+import { InputFeedbackContainer } from "../../containers/InputFeedbackContainer";
 import { Textarea } from "@mui/joy";
 
 export default function DescriptionField({ id }: Readonly<{ id: string }>) {

@@ -3,7 +3,7 @@ import PricesField from "../../components/products/AddProductPrice";
 import ProductSummary from "../../components/products/AddProductsSummary";
 import DescriptionField from "../../components/resuable/form_input/DescriptionField";
 import { FormInput } from "../../components/resuable/form_input/InputFeedback";
-import SelectEnum from "../../components/resuable/form_input/MultiSelect";
+import SelectEnum from "../../components/resuable/form_input/SelectEnum";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const getProductCreationSteps = (getValues: Function) => [

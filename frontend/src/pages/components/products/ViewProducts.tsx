@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/joy";
 import { Product } from "../../../constants/types/Product";
 import ProductCard from "./ProductCard";
-import PositionElement from "../resuable/containers/PositionElement";
+import PositionElement from "../containers/PositionElement";
 
 export default function ViewProducts({ products, title }: Readonly<{ products: Product[]; title: string }>) {
     return (

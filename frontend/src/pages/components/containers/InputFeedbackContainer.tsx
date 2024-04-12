@@ -7,7 +7,7 @@ interface CustomInputProps {
     styles?: SxProps;
 }
 
-export function InputFeedbackContainer({ children, message, styles }: CustomInputProps) {
+export function InputFeedbackContainer({ children, message, styles }: Readonly<CustomInputProps>) {
     return (
         <Stack sx={styles} spacing={0.5}>
             {children}

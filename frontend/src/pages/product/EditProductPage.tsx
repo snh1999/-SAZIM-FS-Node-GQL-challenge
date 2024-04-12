@@ -7,8 +7,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { productCreationSchema } from "../../config/yup/schema/createProduct";
 import { getProductCreationSteps } from "./helper/creationSteps";
 import { AddRent } from "../components/products/AddProductPrice";
-import SelectEnum from "../components/resuable/form_input/MultiSelect";
-import PositionElement from "../components/resuable/containers/PositionElement";
+import SelectEnum from "../components/resuable/form_input/SelectEnum";
+import PositionElement from "../components/containers/PositionElement";
 
 export default function EditMyProduct() {
     const { id } = useParams();

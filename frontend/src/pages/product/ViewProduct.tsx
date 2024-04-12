@@ -1,6 +1,6 @@
 import { Box, Button, Input, Typography } from "@mui/joy";
 import { Category, Product, RentDuration } from "../../constants/types/Product";
-import PositionElement from "../components/resuable/containers/PositionElement";
+import PositionElement from "../components/containers/PositionElement";
 import { useState } from "react";
 import { ConfirmationModal } from "../components/ConfirmationModal";
 

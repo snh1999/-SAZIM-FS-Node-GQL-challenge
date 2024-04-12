@@ -1,6 +1,6 @@
 import { Box, Chip, Option, Select } from "@mui/joy";
 import { useFormContext } from "react-hook-form";
-import { InputFeedbackContainer } from "../containers/InputFeedbackContainer";
+import { InputFeedbackContainer } from "../../containers/InputFeedbackContainer";
 
 interface Props {
     id: string;
@@ -16,8 +16,6 @@ export default function SelectEnum({ id, placeholder, options, multiple = true }
         getValues,
     } = useFormContext();
     const error = errors[id]?.message ?? "";
-
-    console.log(getValues(id));
 
     return (
         <InputFeedbackContainer message={error}>

@@ -1,6 +1,6 @@
 import { Box, Sheet, Typography } from "@mui/joy";
 import { FormInput } from "../resuable/form_input/InputFeedback";
-import SelectEnum from "../resuable/form_input/MultiSelect";
+import SelectEnum from "../resuable/form_input/SelectEnum";
 import { RentDuration } from "../../../constants/types/Product";
 
 export default function PricesField() {
