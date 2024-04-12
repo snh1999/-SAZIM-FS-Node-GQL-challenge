@@ -1,5 +1,5 @@
 import { Box, Button, LinearProgress, Typography } from "@mui/joy";
-import FormContainer from "../resuable/containers/FormContainer";
+import FormContainer from "./resuable/containers/FormContainer";
 import { useState } from "react";
 
 interface Props {

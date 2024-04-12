@@ -1,5 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
-import MultiPageForm from "../components/multi-page-form/MultiPageForm";
+import MultiPageForm from "../components/MultiPageForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { productCreationSchema } from "../../config/yup/schema/createProduct";
 import { getProductCreationSteps } from "./helper/creationSteps";

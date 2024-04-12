@@ -5,17 +5,19 @@ type UserData = {
     id: string;
 };
 
-export const AuthContext = createContext({
-    userData: { token: "", id: "" },
-    login: (_: UserData) => {},
-    logout: () => {},
-});
+export interface IAuthContext {
+    userData: UserData;
+    login: (userData: UserData) => void;
+    logout: () => void;
+}
+
+export const AuthContext = createContext<IAuthContext | null>(null);
 
 interface Props {
     children: React.ReactNode;
 }
 
-export function AuthContextProvider(props: Props) {
+export function AuthContextProvider(props: Readonly<Props>) {
     const { children } = props;
 
     const initialState: UserData = {
