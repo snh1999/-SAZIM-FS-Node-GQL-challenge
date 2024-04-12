@@ -74,11 +74,23 @@ const dummyProducts = [
         rentDuration: RentDuration.DAY,
         ownerId: dummyUsers[2].id,
     },
+    {
+        title: "Mobile",
+        category: [Category.ELECTRONICS],
+        description: "A mobile",
+        price: 1000,
+        rentPrice: 50,
+        rentDuration: RentDuration.DAY,
+        ownerId: dummyUsers[1].id,
+    },
 ];
 
 const prisma = new PrismaClient();
 
 async function main() {
+    await prisma.user.deleteMany();
+    await prisma.product.deleteMany();
+
     await prisma.user.createMany({
         data: dummyUsers,
     });
