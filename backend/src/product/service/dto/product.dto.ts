@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 import { Category, RentDuration } from "@prisma/client";
 
@@ -7,8 +7,8 @@ export class ProductDto {
     @IsNotEmpty()
     title: string;
 
-    @IsNotEmpty()
-    category: Category;
+    @IsArray()
+    category: Category[];
 
     @IsString()
     @IsNotEmpty()
@@ -33,27 +33,28 @@ export class ProductDto {
 export class PartialProductDto {
     @IsString()
     @IsOptional()
-    title: string;
+    title?: string;
 
-    @IsNotEmpty()
-    category: Category;
+    @IsArray()
+    @IsOptional()
+    category?: Category[];
 
     @IsString()
     @IsOptional()
-    description: string;
+    description?: string;
 
     @IsString()
     @IsOptional()
-    ownerId: string;
+    ownerId?: string;
 
     @IsNumber()
     @IsOptional()
-    price: number;
+    price?: number;
 
     @IsNumber()
     @IsOptional()
-    rentPrice: number;
+    rentPrice?: number;
 
     @IsOptional()
-    rentDuration: RentDuration;
+    rentDuration?: RentDuration;
 }
