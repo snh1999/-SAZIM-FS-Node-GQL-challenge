@@ -11,13 +11,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useLazyQuery } from "@apollo/client";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { LOGIN_QUERY } from "../graphql/queries";
-import { useContext } from "react";
-import { AuthContext } from "../config/context/auth_context";
 import { loginSchema } from "../config/yup/schema";
+import useAuth from "../config/hooks/useAuth";
 
 export default function LoginPage() {
     const navigate = useNavigate();
-    const context = useContext(AuthContext);
+    const context = useAuth();
 
     const methods = useForm({
         defaultValues: {

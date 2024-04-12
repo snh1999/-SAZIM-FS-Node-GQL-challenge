@@ -9,19 +9,22 @@ import MyProducts from "./product/MyProducts";
 import AllProducts from "./product/AllProducts";
 import ViewProduct from "./product/ViewProduct";
 import EditProductPage from "./product/EditProductPage";
+import RequireAuth from "./layout/RequireAuth";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<MainLayout />}>
-            <Route index element={<Homepage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/product">
-                <Route index element={<AllProducts />} />
-                <Route path="new" element={<AddProductPage />} />
-                <Route path="my" element={<MyProducts />} />
-                <Route path=":id" element={<ViewProduct />} />
-                <Route path="my/:id" element={<EditProductPage />} />
+            <Route element={<RequireAuth />}>
+                <Route index element={<Homepage />} />
+                <Route path="/product">
+                    <Route index element={<AllProducts />} />
+                    <Route path="new" element={<AddProductPage />} />
+                    <Route path="my" element={<MyProducts />} />
+                    <Route path=":id" element={<ViewProduct />} />
+                    <Route path="my/:id" element={<EditProductPage />} />
+                </Route>
             </Route>
             <Route path="*" element={<ErrorPage />} />
         </Route>
