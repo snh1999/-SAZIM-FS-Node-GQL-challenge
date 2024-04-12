@@ -1,12 +1,13 @@
 import ProductType from "./product.type";
 import { FieldConfigGraphQL, IntegerGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
 import productService from "../service/product.service";
+import { GraphQLList, GraphQLString } from "graphql";
 
 const createProduct: FieldConfigGraphQL = {
     type: ProductType,
     args: {
         title: NonNullStringGQ,
-        category: NonNullStringGQ,
+        category: { type: GraphQLList(GraphQLString) },
         description: NonNullStringGQ,
         price: IntegerGQ,
         rentPrice: IntegerGQ,
@@ -25,7 +26,7 @@ const updateProduct: FieldConfigGraphQL = {
     args: {
         id: NonNullStringGQ,
         title: StringGQ,
-        category: StringGQ,
+        category: { type: GraphQLList(GraphQLString) },
         description: StringGQ,
         price: IntegerGQ,
         rentPrice: IntegerGQ,
