@@ -1,12 +1,12 @@
 import { Category } from "../../../constants/types/Product";
 import PricesField from "../../components/products/AddProductPrice";
-import ProductSummary from "../../components/products/AddProductsSummary";
+import ProductSummary from "../../components/products/ProductCreationSummary";
 import DescriptionField from "../../components/resuable/form_input/DescriptionField";
 import { FormInput } from "../../components/resuable/form_input/InputFeedback";
 import SelectEnum from "../../components/resuable/form_input/SelectEnum";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const getProductCreationSteps = (getValues: Function) => [
+export const getProductCreationSteps = () => [
     {
         title: "Select a title for your product",
         content: <FormInput id="title" type="text" placeholder="" />,
@@ -29,16 +29,7 @@ export const getProductCreationSteps = (getValues: Function) => [
     },
     {
         title: "Summary",
-        content: (
-            <ProductSummary
-                title={getValues("title")}
-                categories={getValues("categories")}
-                description={getValues("description")}
-                price={getValues("price")}
-                rentPrice={getValues("rentPrice")}
-                rentDuration={getValues("rentDuration")}
-            />
-        ),
+        content: <ProductSummary />,
         inputField: [],
     },
 ];
