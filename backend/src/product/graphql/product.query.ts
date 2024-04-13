@@ -12,7 +12,15 @@ const getProduct: FieldConfigGraphQL = {
     },
 };
 
-const getAllProduct: FieldConfigGraphQL = {
+const previewProduct : FieldConfigGraphQL = {
+  type: ProductType,
+  args: {id: IDGQ},
+  resolve(_, args) {
+    return productService.getProductById(args.id);
+  }
+}
+
+const getAllProducts: FieldConfigGraphQL = {
     type: new GraphQLList(ProductType),
     resolve() {
         return productService.getAllProducts();
@@ -31,6 +39,6 @@ const getMyProducts: FieldConfigGraphQL = {
 
 export default {
     getProduct,
-    getAllProduct,
+    getAllProducts,
     getMyProducts,
 };
