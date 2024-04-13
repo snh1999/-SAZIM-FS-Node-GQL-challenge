@@ -1,37 +1,17 @@
 import { Box } from "@mui/joy";
-import { Category, RentDuration } from "../../constants/types/Product";
 import ViewProducts from "../components/products/ViewProducts";
+import { useQuery } from "@apollo/client";
+import { ALL_PRODUCTS_QUERY } from "../../graphql/product/queries";
+import RequestStateWrapper from "../components/containers/RequestStateWrapper";
 
 export default function AllProducts() {
-    const products = [
-        {
-            id: "1",
-            title: "test",
-            categories: [Category.ELECTRONICS, Category.HOME_APPLIANCES],
-            description:
-                "Lorem ipsum dolor sit amet, Loren ipsum dolor sit amet,Loren ipsum dolor sit amet,Loren ipsum dolor sit amet,",
-            createdAt: new Date(),
-            ownerId: "test",
-            price: 1,
-            rentPrice: 1,
-            rentDuration: RentDuration.DAY,
-        },
-        {
-            id: "1",
-            title: "test",
-            categories: [Category.ELECTRONICS, Category.HOME_APPLIANCES],
-            description:
-                "Lorem ipsum dolor sit amet, Loren ipsum dolor sit amet,Loren ipsum dolor sit amet,Loren ipsum dolor sit amet,",
-            createdAt: new Date(),
-            ownerId: "test",
-            price: 1,
-            rentPrice: 1,
-            rentDuration: RentDuration.DAY,
-        },
-    ];
+    const { loading, error, data } = useQuery(ALL_PRODUCTS_QUERY);
+
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", minWidth: 600 }}>
-            <ViewProducts products={products} title="ALL PRODUCTS" />
-        </Box>
+        <RequestStateWrapper loading={loading} error={error?.message} dataMessage="">
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", minWidth: 600 }}>
+                <ViewProducts linkPrefix="/product/" products={data?.getAllProducts} title="ALL PRODUCTS" />
+            </Box>
+        </RequestStateWrapper>
     );
 }
