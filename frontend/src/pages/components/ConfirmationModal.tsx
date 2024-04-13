@@ -11,6 +11,7 @@ interface ModalProps {
     children?: React.ReactNode;
     rightText?: string;
     leftText?: string;
+    onClick?: () => void;
 }
 
 export function ConfirmationModal({
@@ -18,6 +19,7 @@ export function ConfirmationModal({
     setOpen,
     dialogueText,
     children,
+    onClick = () => {},
     rightText = "Yes",
     leftText = "No",
 }: Readonly<ModalProps>) {
@@ -27,7 +29,14 @@ export function ConfirmationModal({
                 <DialogContent sx={{ my: 3, textAlign: "center" }}>{dialogueText}</DialogContent>
                 {children}
                 <DialogActions>
-                    <Button variant="solid" color="primary" onClick={() => setOpen(false)}>
+                    <Button
+                        variant="solid"
+                        color="primary"
+                        onClick={() => {
+                            onClick();
+                            setOpen(false);
+                        }}
+                    >
                         {rightText}
                     </Button>
                     <Button variant="solid" color="danger" onClick={() => setOpen(false)}>

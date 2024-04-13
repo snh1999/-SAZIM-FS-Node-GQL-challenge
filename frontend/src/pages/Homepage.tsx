@@ -9,7 +9,7 @@ export function Homepage() {
                     My Products
                 </Button>
             </Link>
-            <Link style={{ textDecoration: "none" }} to="/product/all">
+            <Link style={{ textDecoration: "none" }} to="/product">
                 <Button size="lg" color="primary" variant="solid">
                     All Products
                 </Button>
