@@ -1,3 +1,5 @@
+import { getEnumValueArray } from "../../utils/helper";
+
 export enum Category {
     ELECTRONICS = "Electronics",
     FURNITURE = "Furniture",
@@ -19,11 +21,21 @@ export enum RentDuration {
 export interface Product {
     id: string;
     title: string;
-    categories: Category[];
+    category: Category[];
     description: string;
     createdAt: Date;
     ownerId: string;
     price: number;
     rentPrice: number;
     rentDuration: RentDuration;
+    view: number;
+}
+
+export function getProductToDefaultValue(product: Product) {
+    if (product)
+        return {
+            ...product,
+            categories: getEnumValueArray(Category, product?.category || []),
+            rentDuration: RentDuration[product?.rentDuration],
+        };
 }
