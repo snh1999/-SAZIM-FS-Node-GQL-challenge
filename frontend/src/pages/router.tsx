@@ -1,18 +1,36 @@
 import { createRoutesFromElements, createBrowserRouter, Route } from "react-router-dom";
-import ErrorPage from "../pages/ErrorPage";
-import MainLayout from "../pages/layout/Mainlayout";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
+import ErrorPage from "./ErrorPage";
+import MainLayout from "./layout/Mainlayout";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+import { Homepage } from "./Homepage";
+import AddProductPage from "./product/AddProductPage";
+import MyProducts from "./product/MyProducts";
+import AllProducts from "./product/AllProducts";
+import ViewProduct from "./product/ViewProduct";
+import EditProductPage from "./product/EditProductPage";
+import RequireAuth from "./layout/RequireAuth";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<MainLayout />}>
-            <Route index element={<ErrorPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route element={<RequireAuth />}>
+                <Route index element={<Homepage />} />
+                <Route path="/product">
+                    <Route index element={<AllProducts />} />
+                    <Route path="new" element={<AddProductPage />} />
+                    <Route path="my" element={<MyProducts />} />
+                    <Route path=":id" element={<ViewProduct />} />
+                    <Route path="my/:id" element={<EditProductPage />} />
+                </Route>
+            </Route>
+            <Route path="*" element={<ErrorPage />} />
         </Route>
     )
 );
+
 export default router;
 
 // const router = createBrowserRouter(

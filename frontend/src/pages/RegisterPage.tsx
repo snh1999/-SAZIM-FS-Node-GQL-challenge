@@ -1,21 +1,19 @@
 import Box from "@mui/joy/Box";
-import CircularProgress from "@mui/joy/CircularProgress";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
 import { Link, useNavigate } from "react-router-dom";
-import FormContainer from "../components/resuable/FormContainer";
-import CenteredElement from "../components/resuable/CenteredElement";
+import FormContainer from "./components/containers/FormContainer";
+import PositionElement from "./components/containers/PositionElement";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInput } from "../components/resuable/form_input/InputFeedback";
+import { FormInput } from "./components/resuable/form_input/InputFeedback";
 
-import FormPasswordInput from "../components/resuable/form_input/PasswordField";
+import FormPasswordInput from "./components/resuable/form_input/PasswordField";
 import { registerSchema } from "../config/yup/schema/register";
 import { useMutation } from "@apollo/client";
-import { REGISTER_MUTATION } from "../graphql/mutations";
-import { CustomSnackBar } from "../components/resuable/WarningAlert";
+import { REGISTER_MUTATION } from "../graphql/user/mutations";
+import RequestStateWrapper from "./components/containers/RequestStateWrapper";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
@@ -31,11 +29,10 @@ export default function RegisterPage() {
         },
         resolver: yupResolver(registerSchema),
     });
-    const { handleSubmit } = methods;
 
     const [register, { loading, error, data }] = useMutation(REGISTER_MUTATION);
 
-    const handleRegister = (data: any) => {
+    const handleRegister = methods.handleSubmit((data) => {
         register({
             variables: {
                 firstName: data.firstName,
@@ -45,25 +42,17 @@ export default function RegisterPage() {
                 phone: data.phone,
                 password: data.password,
             },
-        }).then((response) => {
-            navigate("/login");
+        }).then(() => {
+            setTimeout(() => {
+                navigate("/login");
+            }, 1000);
         });
-    };
+    });
 
-    if (loading) {
-        return <CircularProgress size="lg" />;
-    }
     return (
-        <div>
-            {data && (
-                <CustomSnackBar
-                    alertText="Registered Successfully"
-                    color="success"
-                    startDecorator={<CheckCircleIcon />}
-                ></CustomSnackBar>
-            )}
+        <RequestStateWrapper dataMessage="Registered Successfully" loading={loading} data={data} error={error?.message}>
             <FormProvider {...methods}>
-                <FormContainer border="outlined" titleText="REGISTER" errorMessage={error?.message}>
+                <FormContainer border="outlined" titleText="REGISTER">
                     <Box sx={{ display: "flex", gap: 2 }}>
                         <FormInput styles={{ width: "49%" }} id="firstName" placeholder="First Name" type="text" />
                         <FormInput styles={{ width: "49%" }} id="lastName" placeholder="Last Name" type="text" />
@@ -79,9 +68,9 @@ export default function RegisterPage() {
                     <FormPasswordInput id="password" placeholder="Password" />
                     <FormPasswordInput id="confirmPassword" placeholder="ConfirmPassword" />
 
-                    <CenteredElement>
-                        <Button onClick={handleSubmit(handleRegister)}>REGISTER</Button>
-                    </CenteredElement>
+                    <PositionElement>
+                        <Button onClick={handleRegister}>REGISTER</Button>
+                    </PositionElement>
 
                     <Typography
                         endDecorator={<Link to="/login">Sign In</Link>}
@@ -92,6 +81,6 @@ export default function RegisterPage() {
                     </Typography>
                 </FormContainer>
             </FormProvider>
-        </div>
+        </RequestStateWrapper>
     );
 }

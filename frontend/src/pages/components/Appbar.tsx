@@ -1,13 +1,12 @@
 import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
 import { useColorScheme } from "@mui/joy/styles";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../config/context/auth_context";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import useAuth from "../../config/hooks/useAuth";
 
 export default function AppBar() {
-    const context = useContext(AuthContext);
-    const navigate = useNavigate();
+    const context = useAuth();
 
     return (
         <nav style={{ display: "flex", justifyContent: "space-between" }}>
@@ -20,7 +19,6 @@ export default function AppBar() {
                         sx={{ margin: 1 }}
                         onClick={() => {
                             context.logout();
-                            navigate("/login");
                         }}
                     >
                         Logout
@@ -59,22 +57,22 @@ function Logo() {
     return (
         <Typography
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
                 mr: 2,
                 display: "inline",
                 margin: 1.5,
-                marginLeft: 5,
+                marginLeft: 10,
                 fontFamily: "monospace",
                 fontWeight: 700,
-                fontSize: "1.2rem",
+                fontSize: "1.5rem",
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
             }}
         >
-            Teebay
+            <Link to="/" style={{ textDecoration: "none" }}>
+                Teebay
+            </Link>
         </Typography>
     );
 }
