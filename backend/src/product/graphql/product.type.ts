@@ -11,8 +11,8 @@ const ProductType = new GraphQLObjectType({
         price: { type: GraphQLInt },
         rentPrice: { type: GraphQLInt },
         rentDuration: { type: GraphQLString },
-        view: {type: GraphQLInt},
-        ownerId: {type: GraphQLID},
+        view: { type: GraphQLInt },
+        ownerId: { type: GraphQLID },
     },
 });
 
