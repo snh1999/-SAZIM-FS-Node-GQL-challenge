@@ -39,13 +39,16 @@ const getMyProducts: FieldConfigGraphQL = {
     },
 };
 
-const getRentTransactionHistory: FieldConfigGraphQL = {
+const getTransactionHistory: FieldConfigGraphQL = {
     type: GraphQLList(TransactionsType),
     args: {
-        productId: NonNullStringGQ,
+        id: NonNullStringGQ,
     },
-    resolve(_, args, context) {
-        return transactionService.getRentTransactionHistory(args.id);
+    async resolve(_, args, context) {
+        const sellHistory = await transactionService.checkIfSold(args.id);
+        const rentHistory = await transactionService.getRentTransactionHistory(args.id);
+        if (sellHistory) rentHistory.push(sellHistory);
+        return rentHistory;
     },
 };
 
@@ -53,5 +56,6 @@ export default {
     getProduct,
     getAllProducts,
     getMyProducts,
-    getRentTransactionHistory,
+    getTransactionHistory,
+    previewProduct,
 };

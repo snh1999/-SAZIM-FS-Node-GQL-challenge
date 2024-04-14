@@ -71,12 +71,12 @@ const buyProduct: FieldConfigGraphQL = {
 const rentProduct: FieldConfigGraphQL = {
     type: TransactionsType,
     args: {
-        productId: NonNullStringGQ,
+        id: NonNullStringGQ,
+        startDate: NonNullStringGQ,
+        endDate: NonNullStringGQ,
     },
     resolve(_, args, context) {
-        const startDate = new Date(Date.now() + 60 * 60 * 4);
-        const endDate = new Date(Date.now() + 60 * 60 * 5);
-        return transactionService.rentProduct(args.productId, context.user, startDate, endDate);
+        return transactionService.rentProduct(args.id, context.user, args.startDate, args.endDate);
     },
 };
 

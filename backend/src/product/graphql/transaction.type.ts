@@ -3,8 +3,8 @@ const TransactionsType = new GraphQLObjectType({
     name: "Transaction",
     fields: {
         id: { type: GraphQLInt },
-        type: { type: GraphQLString },
-        productId: { type: GraphQLString },
+        transactionType: { type: GraphQLString },
+        productID: { type: GraphQLString },
         originalOwnerId: { type: GraphQLString },
         newHolderId: { type: GraphQLString },
         rentStartDate: { type: GraphQLString },
