@@ -54,6 +54,7 @@ export default function ViewProduct() {
                 openModal={openRentModal}
                 setOpenModal={setRentModalOpen}
                 transactionHistory={dataHistory?.getTransactionHistory}
+                productId={id}
             />
         </RequestStateWrapper>
     );

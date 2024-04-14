@@ -1,10 +1,11 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { ConfirmationModal } from "../../ConfirmationModal";
 import RequestStateWrapper from "../../containers/RequestStateWrapper";
-import { BUY_PRODUCT_MUTATION } from "../../../../graphql/product/mutations";
-import { Box, Input } from "@mui/joy";
+import { BUY_PRODUCT_MUTATION, RENT_PRODUCT_MUTATION } from "../../../../graphql/product/mutations";
+import DatePicker from "../../resuable/Datepicker";
+import { useState } from "react";
 import { TRANSACTION_HISTORY_QUERY } from "../../../../graphql/product/queries";
-import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
     openModal: boolean;
@@ -13,7 +14,11 @@ interface ModalProps {
 }
 
 export function BuyProduct({ openModal, setOpenModal, productId }: Readonly<ModalProps>) {
-    const [buyProduct, { loading, error, data }] = useMutation(BUY_PRODUCT_MUTATION);
+    const [buyProduct, { loading, error, data }] = useMutation(BUY_PRODUCT_MUTATION, {
+        refetchQueries: [TRANSACTION_HISTORY_QUERY],
+    });
+
+    const navigate = useNavigate();
 
     return (
         <RequestStateWrapper
@@ -28,6 +33,7 @@ export function BuyProduct({ openModal, setOpenModal, productId }: Readonly<Moda
                 dialogueText="Are you sure you want to buy this product?"
                 onClick={() => {
                     buyProduct({ variables: { id: productId } });
+                    setTimeout(() => navigate(0), 1000);
                 }}
             />
         </RequestStateWrapper>
@@ -38,39 +44,62 @@ interface RentModalProps {
     transactionHistory?: any[];
     openModal: boolean;
     setOpenModal: (newState: boolean) => void;
+    productId?: string;
 }
 
-export function RentProduct({ openModal, setOpenModal, transactionHistory }: Readonly<RentModalProps>) {
-    // const rentDateSchema = yup.object().shape({
-    //     from: yup.date().min(new Date()).required("Required"),
-    //     to: yup.string().required("Required"),
-    // })
+export function RentProduct({ openModal, setOpenModal, transactionHistory, productId }: Readonly<RentModalProps>) {
+    const [fromValue, setFromValue] = useState<string>("");
+    const [toValue, setToValue] = useState<string>("");
 
-    yup.addMethod(yup.date, "newMethod", function (this: yup.DateSchema, date: Date, message?: string) {
-        return this.test("min-date", message, function (value) {
-            // check if data is in the middle of two
-        });
+    const navigte = useNavigate();
+
+    const [rentProduct, { loading, error, data }] = useMutation(RENT_PRODUCT_MUTATION);
+
+    const sortedHistory = transactionHistory?.sort((a, b) => {
+        console.log(a.rentStartDate);
+        return a?.rentStartDate - (b?.rentStartDate ?? 0);
     });
 
+    const onClick = () => {
+        rentProduct({
+            variables: {
+                id: productId,
+                startDate: new Date(fromValue).toISOString(),
+                endDate: new Date(toValue).toISOString(),
+            },
+        });
+        setFromValue("");
+        setToValue("");
+        setTimeout(() => navigte(0), 1000);
+    };
+
+    const disableDates = sortedHistory?.map((history) => {
+        console.log(history);
+        return {
+            from: new Date(parseInt(history.rentStartDate)),
+            to: new Date(parseInt(history.rentEndDate)),
+        };
+    });
+    console.log(disableDates);
+
     return (
-        <ConfirmationModal
-            open={openModal}
-            setOpen={setOpenModal}
-            dialogueText="Rental Period"
-            rightText="Confirm rent"
-            leftText="Go Back"
-        >
-            <Box sx={{ display: "flex", gap: 5 }}>
-                <Box>
-                    From
-                    {/* <Input type="date"></Input> */}
-                    <input type="date" min={Date.now()}></input>
-                </Box>
-                <Box>
-                    To
-                    <Input type="date"></Input>
-                </Box>
-            </Box>
-        </ConfirmationModal>
+        <RequestStateWrapper loading={loading} error={error?.message} data={data} dataMessage="Added Rent">
+            <ConfirmationModal
+                open={openModal}
+                setOpen={setOpenModal}
+                dialogueText="Rental Period"
+                rightText="Confirm rent"
+                leftText="Go Back"
+                onClick={onClick}
+            >
+                <DatePicker
+                    disabledDates={disableDates}
+                    fromValue={fromValue}
+                    setFromValue={setFromValue}
+                    toValue={toValue}
+                    setToValue={setToValue}
+                />
+            </ConfirmationModal>
+        </RequestStateWrapper>
     );
 }

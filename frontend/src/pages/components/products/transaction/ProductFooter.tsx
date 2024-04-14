@@ -22,6 +22,7 @@ export default function ProductFooter({
     //     variables: { id: product?.id ?? "random" },
     //     fetchPolicy: "no-cache",
     // });
+    console.log(transactionHistory);
     const lastHistory = transactionHistory?.slice(-1)[0];
     const isSold = lastHistory?.transactionType == "SELL";
 
