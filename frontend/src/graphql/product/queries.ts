@@ -45,6 +45,17 @@ export const VIEW_PRODUCT_QUERY = gql`
     }
 `;
 
+export const TRANSACTION_HISTORY_QUERY = gql`
+    query getTransactionHistory($id: String!) {
+        getTransactionHistory(id: $id) {
+            id
+            rentStartDate
+            rentEndDate
+            transactionType
+        }
+    }
+`;
+
 export const PREVIEW_PRODUCT_QUERY = gql`
     query previewProduct($id: ID!) {
         getProduct(id: $id) {

@@ -5,7 +5,7 @@ import { ALL_PRODUCTS_QUERY } from "../../graphql/product/queries";
 import RequestStateWrapper from "../components/containers/RequestStateWrapper";
 
 export default function AllProducts() {
-    const { loading, error, data } = useQuery(ALL_PRODUCTS_QUERY);
+    const { loading, error, data } = useQuery(ALL_PRODUCTS_QUERY, { fetchPolicy: "no-cache" });
 
     return (
         <RequestStateWrapper loading={loading} error={error?.message} dataMessage="">

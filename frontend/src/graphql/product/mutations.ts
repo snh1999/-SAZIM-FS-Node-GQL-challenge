@@ -65,3 +65,13 @@ export const DELETE_PRODUCT_MUTATION = gql`
         }
     }
 `;
+
+export const BUY_PRODUCT_MUTATION = gql`
+    mutation buyProduct($id: String!) {
+        buyProduct(id: $id) {
+            id
+            title
+            ownerId
+        }
+    }
+`;
