@@ -73,7 +73,7 @@ model Transaction {
   id              Int             @id @default(autoincrement())
   transactionType TransactionType
 
-  product         Product   @relation(fields: [productID], references: [id])
+  product         Product   @relation(fields: [productID], references: [id], onDelete: Cascade)
   productID       String
   originalOwner   User      @relation("originalOwner", fields: [originalOwnerId], references: [id])
   originalOwnerId String
