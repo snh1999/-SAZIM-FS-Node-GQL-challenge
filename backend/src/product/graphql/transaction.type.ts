@@ -1,4 +1,5 @@
 import { GraphQLInt, GraphQLObjectType, GraphQLString } from "graphql";
+import ProductType from "./product.type";
 const TransactionsType = new GraphQLObjectType({
     name: "Transaction",
     fields: {
@@ -10,6 +11,7 @@ const TransactionsType = new GraphQLObjectType({
         rentStartDate: { type: GraphQLString },
         rentEndDate: { type: GraphQLString },
         transactionDate: { type: GraphQLString },
+        product: { type: ProductType },
     },
 });
 

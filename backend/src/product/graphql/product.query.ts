@@ -52,10 +52,18 @@ const getTransactionHistory: FieldConfigGraphQL = {
     },
 };
 
+const getMyTransactions: FieldConfigGraphQL = {
+    type: GraphQLList(TransactionsType),
+    async resolve(_, args, context) {
+    return await transactionService.getMyTransactions(context.user)
+  }
+}
+
 export default {
     getProduct,
     getAllProducts,
     getMyProducts,
     getTransactionHistory,
     previewProduct,
+  getMyTransactions
 };
