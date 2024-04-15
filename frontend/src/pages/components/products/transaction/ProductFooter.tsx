@@ -2,6 +2,7 @@ import { Product } from "../../../../constants/types/Product";
 import RequestStateWrapper from "../../containers/RequestStateWrapper";
 import { Typography } from "@mui/joy";
 import PositionElement from "../../containers/PositionElement";
+import { useEffect } from "react";
 
 interface ProductFooterProps {
     product?: Product;
@@ -18,16 +19,12 @@ export default function ProductFooter({
     transactionHistory,
     loading,
 }: Readonly<ProductFooterProps>) {
-    // const { loading, data } = useQuery(TRANSACTION_HISTORY_QUERY, {
-    //     variables: { id: product?.id ?? "random" },
-    //     fetchPolicy: "no-cache",
-    // });
-    console.log(transactionHistory);
     const lastHistory = transactionHistory?.slice(-1)[0];
+
+    useEffect(() => {}, [transactionHistory]);
+
     const isSold = lastHistory?.transactionType == "SELL";
-
     const isMyProduct = product?.ownerId === userId;
-
     const isBoughtByUser = isSold && isMyProduct;
     const isSoldByUser = isSold && lastHistory?.originalOwnerId === userId;
     const isBuyableProduct = !isMyProduct && !isSold;

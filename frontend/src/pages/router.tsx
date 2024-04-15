@@ -10,6 +10,7 @@ import AllProducts from "./product/AllProducts";
 import ViewProduct from "./product/ViewProduct";
 import EditProductPage from "./product/EditProductPage";
 import RequireAuth from "./layout/RequireAuth";
+import HistoryPage from "./HistoryPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
                     <Route path=":id" element={<ViewProduct />} />
                     <Route path="my/:id" element={<EditProductPage />} />
                 </Route>
+                <Route path="/history" element={<HistoryPage />} />
             </Route>
             <Route path="*" element={<ErrorPage />} />
         </Route>

@@ -5,7 +5,6 @@ import { BUY_PRODUCT_MUTATION, RENT_PRODUCT_MUTATION } from "../../../../graphql
 import DatePicker from "../../resuable/Datepicker";
 import { useState } from "react";
 import { TRANSACTION_HISTORY_QUERY } from "../../../../graphql/product/queries";
-import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
     openModal: boolean;
@@ -17,8 +16,6 @@ export function BuyProduct({ openModal, setOpenModal, productId }: Readonly<Moda
     const [buyProduct, { loading, error, data }] = useMutation(BUY_PRODUCT_MUTATION, {
         refetchQueries: [TRANSACTION_HISTORY_QUERY],
     });
-
-    const navigate = useNavigate();
 
     return (
         <RequestStateWrapper
@@ -33,7 +30,6 @@ export function BuyProduct({ openModal, setOpenModal, productId }: Readonly<Moda
                 dialogueText="Are you sure you want to buy this product?"
                 onClick={() => {
                     buyProduct({ variables: { id: productId } });
-                    setTimeout(() => navigate(0), 1000);
                 }}
             />
         </RequestStateWrapper>
@@ -51,9 +47,9 @@ export function RentProduct({ openModal, setOpenModal, transactionHistory, produ
     const [fromValue, setFromValue] = useState<string>("");
     const [toValue, setToValue] = useState<string>("");
 
-    const navigte = useNavigate();
-
-    const [rentProduct, { loading, error, data }] = useMutation(RENT_PRODUCT_MUTATION);
+    const [rentProduct, { loading, error, data }] = useMutation(RENT_PRODUCT_MUTATION, {
+        refetchQueries: [TRANSACTION_HISTORY_QUERY],
+    });
 
     const sortedHistory = transactionHistory?.sort((a, b) => {
         console.log(a.rentStartDate);
@@ -70,17 +66,14 @@ export function RentProduct({ openModal, setOpenModal, transactionHistory, produ
         });
         setFromValue("");
         setToValue("");
-        setTimeout(() => navigte(0), 1000);
     };
 
     const disableDates = sortedHistory?.map((history) => {
-        console.log(history);
         return {
             from: new Date(parseInt(history.rentStartDate)),
             to: new Date(parseInt(history.rentEndDate)),
         };
     });
-    console.log(disableDates);
 
     return (
         <RequestStateWrapper loading={loading} error={error?.message} data={data} dataMessage="Added Rent">

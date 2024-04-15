@@ -68,3 +68,30 @@ export const PREVIEW_PRODUCT_QUERY = gql`
         }
     }
 `;
+
+export const CURRENT_USER_TRANSACTIONS_QUERY = gql`
+    query getMyTransactions {
+        getMyTransactions {
+            id
+            transactionType
+            originalOwnerId
+            newHolderId
+            rentStartDate
+            rentEndDate
+            transactionDate
+            product {
+                id
+                title
+                createdAt
+                category
+                description
+                createdAt
+                price
+                rentPrice
+                rentDuration
+                view
+                ownerId
+            }
+        }
+    }
+`;
