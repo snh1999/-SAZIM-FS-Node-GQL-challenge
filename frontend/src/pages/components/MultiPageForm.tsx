@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { Box, Button, LinearProgress, Typography } from "@mui/joy";
 import FormContainer from "./containers/FormContainer";
-import { useState } from "react";
 
 interface Props {
     steps: { title: string; content: React.ReactNode; inputField: string[] }[];
@@ -9,6 +9,11 @@ interface Props {
     trigger: Function;
 }
 
+/**
+ * Function to handle the next button click(and render components) to product creation multi page form.
+ *
+ * @return {void}
+ */
 export default function MultiPageForm({ steps, onSubmit, trigger }: Readonly<Props>) {
     const [index, setIndex] = useState(0);
     const length = steps.length - 1;

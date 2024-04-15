@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/joy";
-
 import { useFormContext } from "react-hook-form";
 
+/**
+ * Component for displaying product summary information at the end step of product creation form.
+ */
 export default function ProductSummary() {
     const { getValues } = useFormContext();
 

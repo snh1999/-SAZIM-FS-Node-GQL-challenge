@@ -1,17 +1,16 @@
-import Typography from "@mui/joy/Typography";
-import Button from "@mui/joy/Button";
-
+import { Button, Typography } from "@mui/joy";
+import { useLazyQuery } from "@apollo/client";
+import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import useAuth from "../config/hooks/useAuth";
+import { loginSchema } from "../config/yup/schema";
+import { LOGIN_QUERY } from "../graphql/user/queries";
 import FormContainer from "./components/containers/FormContainer";
 import PositionElement from "./components/containers/PositionElement";
+import FormInput from "./components/resuable/form_input/InputFeedback";
 import FormPasswordInput from "./components/resuable/form_input/PasswordField";
-import { FormProvider, useForm } from "react-hook-form";
-import { FormInput } from "./components/resuable/form_input/InputFeedback";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useLazyQuery } from "@apollo/client";
-import { LOGIN_QUERY } from "../graphql/user/queries";
-import { loginSchema } from "../config/yup/schema";
-import useAuth from "../config/hooks/useAuth";
 import RequestStateWrapper from "./components/containers/RequestStateWrapper";
 
 export default function LoginPage() {
@@ -35,7 +34,6 @@ export default function LoginPage() {
         login({ variables: { email: data.email, password: data.password } }).then((response) => {
             const token = response.data?.login?.token;
             const id = response.data?.login?.id;
-            console.log(response);
 
             if (token) {
                 context.login({ token, id });

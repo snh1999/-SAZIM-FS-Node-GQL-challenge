@@ -1,8 +1,14 @@
 import { Box, Sheet, Typography } from "@mui/joy";
-import { FormInput } from "../resuable/form_input/InputFeedback";
+
 import SelectEnum from "../resuable/form_input/SelectEnum";
+import FormInput from "../resuable/form_input/InputFeedback";
 import { RentDuration } from "../../../constants/types/Product";
 
+/**
+ * Renders the final page of multi-page form to add product
+ *
+ * @return {JSX.Element} The rendered PricesField component according to wireframe
+ */
 export default function PricesField() {
     return (
         <Sheet sx={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "center" }}>

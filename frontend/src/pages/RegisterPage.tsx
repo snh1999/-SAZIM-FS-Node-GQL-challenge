@@ -7,7 +7,7 @@ import PositionElement from "./components/containers/PositionElement";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInput } from "./components/resuable/form_input/InputFeedback";
+import FormInput from "./components/resuable/form_input/InputFeedback";
 
 import FormPasswordInput from "./components/resuable/form_input/PasswordField";
 import { registerSchema } from "../config/yup/schema/register";

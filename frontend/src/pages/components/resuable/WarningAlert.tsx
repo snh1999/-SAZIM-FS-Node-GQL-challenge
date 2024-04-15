@@ -10,6 +10,14 @@ interface Props {
     color?: "danger" | "primary" | "success" | "warning";
 }
 
+/**
+ * Generates a custom Snackbar component with the specified alert text, start decorator, and color.
+ *
+ * @param {string} alertText - The text to display in the Snackbar
+ * @param {ReactNode} startDecorator - The decorator to display at the start of the Snackbar
+ * @param {string} color - The color theme for the Snackbar (default is "danger")
+ * @return {JSX.Element} The custom Snackbar component
+ */
 export function CustomSnackBar({ alertText, startDecorator, color = "danger" }: Props) {
     const [open, setOpen] = useState(true);
     return (
