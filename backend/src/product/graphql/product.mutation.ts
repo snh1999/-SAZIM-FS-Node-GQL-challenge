@@ -2,6 +2,8 @@ import ProductType from "./product.type";
 import { FieldConfigGraphQL, IntegerGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
 import productService from "../service/product.service";
 import { GraphQLList, GraphQLString } from "graphql";
+import transactionService from "../service/transaction.service";
+import TransactionsType from "../graphql/transaction.type";
 
 const createProduct: FieldConfigGraphQL = {
     type: ProductType,
@@ -53,8 +55,35 @@ const deleteProduct: FieldConfigGraphQL = {
     },
 };
 
+const buyProduct: FieldConfigGraphQL = {
+    type: ProductType,
+    args: {
+        id: NonNullStringGQ,
+    },
+    resolve(_, args, context) {
+        if (!context.isAuthenticated) {
+            return new Error("You must be logged in for this operation");
+        }
+        return transactionService.buyProduct(args.id, context.user);
+    },
+};
+
+const rentProduct: FieldConfigGraphQL = {
+    type: TransactionsType,
+    args: {
+        id: NonNullStringGQ,
+        startDate: NonNullStringGQ,
+        endDate: NonNullStringGQ,
+    },
+    resolve(_, args, context) {
+        return transactionService.rentProduct(args.id, context.user, args.startDate, args.endDate);
+    },
+};
+
 export default {
     createProduct,
     updateProduct,
     deleteProduct,
+    buyProduct,
+    rentProduct,
 };

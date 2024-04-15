@@ -14,14 +14,16 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  firstName String    @map("first_name")
-  lastName  String?   @map("last_name")
-  email     String    @unique
-  password  String
-  address   String?
-  phone     String
-  products  Product[]
+  id                  String        @id @default(uuid())
+  firstName           String        @map("first_name")
+  lastName            String?       @map("last_name")
+  email               String        @unique
+  password            String
+  address             String?
+  phone               String
+  products            Product[]
+  outgoingTransaction Transaction[] @relation("originalOwner")
+  incomingTransaction Transaction[] @relation("newHolder")
 
   @@map("users")
 }
@@ -56,7 +58,28 @@ model Product {
   price        Int
   rentPrice    Int
   rentDuration RentDuration
-  view         Int          @default(0)
+  view         Int           @default(0)
+  transaction  Transaction[]
 
   @@map("products")
+}
+
+enum TransactionType {
+  SELL
+  RENT
+}
+
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  transactionType TransactionType
+
+  product         Product   @relation(fields: [productID], references: [id], onDelete: Cascade)
+  productID       String
+  originalOwner   User      @relation("originalOwner", fields: [originalOwnerId], references: [id])
+  originalOwnerId String
+  newHolder       User      @relation("newHolder", fields: [newHolderId], references: [id])
+  newHolderId     String
+  transactionDate DateTime  @default(now())
+  rentStartDate   DateTime?
+  rentEndDate     DateTime?
 }

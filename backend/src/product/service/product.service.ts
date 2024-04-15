@@ -53,7 +53,7 @@ async function viewProduct(id: string) {
 }
 
 async function getProductById(id: string) {
-  return prismaClient.product.findUnique({
+  return await prismaClient.product.findUnique({
     where: {
       id,
     },
