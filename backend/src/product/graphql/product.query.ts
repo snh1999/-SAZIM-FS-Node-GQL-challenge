@@ -40,7 +40,7 @@ const getMyProducts: FieldConfigGraphQL = {
 };
 
 const getTransactionHistory: FieldConfigGraphQL = {
-    type: GraphQLList(TransactionsType),
+    type: new GraphQLList(TransactionsType),
     args: {
         id: NonNullStringGQ,
     },
@@ -53,11 +53,11 @@ const getTransactionHistory: FieldConfigGraphQL = {
 };
 
 const getMyTransactions: FieldConfigGraphQL = {
-    type: GraphQLList(TransactionsType),
+    type: new GraphQLList(TransactionsType),
     async resolve(_, args, context) {
-    return await transactionService.getMyTransactions(context.user)
-  }
-}
+        return await transactionService.getMyTransactions(context.user);
+    },
+};
 
 export default {
     getProduct,
@@ -65,5 +65,5 @@ export default {
     getMyProducts,
     getTransactionHistory,
     previewProduct,
-  getMyTransactions
+    getMyTransactions,
 };

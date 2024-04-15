@@ -9,7 +9,7 @@ const createProduct: FieldConfigGraphQL = {
     type: ProductType,
     args: {
         title: NonNullStringGQ,
-        category: { type: GraphQLList(GraphQLString) },
+        category: { type: new GraphQLList(GraphQLString) },
         description: NonNullStringGQ,
         price: IntegerGQ,
         rentPrice: IntegerGQ,
@@ -28,7 +28,7 @@ const updateProduct: FieldConfigGraphQL = {
     args: {
         id: NonNullStringGQ,
         title: StringGQ,
-        category: { type: GraphQLList(GraphQLString) },
+        category: { type: new GraphQLList(GraphQLString) },
         description: StringGQ,
         price: IntegerGQ,
         rentPrice: IntegerGQ,
