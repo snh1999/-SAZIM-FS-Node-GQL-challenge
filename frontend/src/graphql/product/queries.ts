@@ -45,6 +45,17 @@ export const VIEW_PRODUCT_QUERY = gql`
     }
 `;
 
+export const TRANSACTION_HISTORY_QUERY = gql`
+    query getTransactionHistory($id: String!) {
+        getTransactionHistory(id: $id) {
+            id
+            rentStartDate
+            rentEndDate
+            transactionType
+        }
+    }
+`;
+
 export const PREVIEW_PRODUCT_QUERY = gql`
     query previewProduct($id: ID!) {
         getProduct(id: $id) {
@@ -54,6 +65,33 @@ export const PREVIEW_PRODUCT_QUERY = gql`
             description
             rentDuration
             rentPrice
+        }
+    }
+`;
+
+export const CURRENT_USER_TRANSACTIONS_QUERY = gql`
+    query getMyTransactions {
+        getMyTransactions {
+            id
+            transactionType
+            originalOwnerId
+            newHolderId
+            rentStartDate
+            rentEndDate
+            transactionDate
+            product {
+                id
+                title
+                createdAt
+                category
+                description
+                createdAt
+                price
+                rentPrice
+                rentDuration
+                view
+                ownerId
+            }
         }
     }
 `;

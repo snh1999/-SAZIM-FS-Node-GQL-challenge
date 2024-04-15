@@ -65,3 +65,21 @@ export const DELETE_PRODUCT_MUTATION = gql`
         }
     }
 `;
+
+export const BUY_PRODUCT_MUTATION = gql`
+    mutation buyProduct($id: String!) {
+        buyProduct(id: $id) {
+            id
+            title
+            ownerId
+        }
+    }
+`;
+
+export const RENT_PRODUCT_MUTATION = gql`
+    mutation rentProduct($id: String!, $startDate: String!, $endDate: String!) {
+        rentProduct(id: $id, startDate: $startDate, endDate: $endDate) {
+            id
+        }
+    }
+`;

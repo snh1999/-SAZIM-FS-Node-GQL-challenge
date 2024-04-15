@@ -19,9 +19,10 @@ interface Props {
     product: Product & { categories: string };
     showDelete?: boolean;
     productLink: string;
+    children?: React.ReactNode;
 }
 
-export default function ProductCard({ product, productLink, showDelete = false }: Readonly<Props>) {
+export default function ProductCard({ product, productLink, children, showDelete = false }: Readonly<Props>) {
     const navigate = useNavigate();
     return (
         <Card sx={{ pl: 5, letterSpacing: 1, cursor: "pointer" }} size="lg">
@@ -50,6 +51,7 @@ export default function ProductCard({ product, productLink, showDelete = false }
                     <Typography level="body-sm" color="primary">
                         {product.description.length > 200 ? "...More Details" : ""}
                     </Typography>
+                    {children}
                 </Typography>
                 <CardContent
                     sx={{ display: "flex", justifyContent: "space-between", letterSpacing: 0 }}
