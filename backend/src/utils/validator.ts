@@ -1,5 +1,6 @@
-import { ClassConstructor, plainToClass } from "class-transformer";
 import { validate } from "class-validator";
+import { ClassConstructor, plainToClass } from "class-transformer";
+
 import { AppError } from "./errorHandler";
 
 /**

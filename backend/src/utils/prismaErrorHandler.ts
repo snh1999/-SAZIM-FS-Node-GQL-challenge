@@ -1,5 +1,5 @@
-import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
 import { AppError } from "./errorHandler";
+import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
 
 export function prismaErrorHandler(callback: Function) {
     return Promise.resolve(callback())

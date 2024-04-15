@@ -1,9 +1,10 @@
-import ProductType from "./product.type";
-import { FieldConfigGraphQL, IntegerGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
-import productService from "../service/product.service";
 import { GraphQLList, GraphQLString } from "graphql";
-import transactionService from "../service/transaction.service";
+
+import ProductType from "./product.type";
 import TransactionsType from "../graphql/transaction.type";
+import productService from "../service/product.service";
+import transactionService from "../service/transaction.service";
+import { FieldConfigGraphQL, IntegerGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
 
 const createProduct: FieldConfigGraphQL = {
     type: ProductType,

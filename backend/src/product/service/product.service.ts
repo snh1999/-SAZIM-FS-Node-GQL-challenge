@@ -1,6 +1,6 @@
 import { prismaClient } from "../../config/db";
-import { AppError, getPrismaAppError, inputValidationCallback } from "../../utils";
 import { PartialProductDto, ProductDto } from "./dto/product.dto";
+import { AppError, getPrismaAppError, inputValidationCallback } from "../../utils";
 
 /**
  * Asynchronously creates a product using the provided ProductDto after validating the input.

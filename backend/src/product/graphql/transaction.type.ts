@@ -1,5 +1,6 @@
 import { GraphQLInt, GraphQLObjectType, GraphQLString } from "graphql";
 import ProductType from "./product.type";
+
 const TransactionsType = new GraphQLObjectType({
     name: "Transaction",
     fields: {

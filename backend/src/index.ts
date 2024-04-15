@@ -1,13 +1,12 @@
 import express from "express";
 import { createHandler } from "graphql-http/lib/use/express";
+const { ruruHTML } = require("ruru/server");
+const cors = require("cors");
+require("dotenv").config();
 
 import schema from "./schema/schema";
 import { authMiddleware } from "./middleware/auth.middleware";
 import { errorHandler } from "./utils/errorHandler";
-
-const { ruruHTML } = require("ruru/server");
-const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;

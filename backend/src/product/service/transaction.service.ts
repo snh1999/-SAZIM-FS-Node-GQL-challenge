@@ -1,7 +1,7 @@
 import { TransactionType } from "@prisma/client";
-import { prismaClient } from "../../config/db";
 import { AppError } from "../../utils";
 import productService from "./product.service";
+import { prismaClient } from "../../config/db";
 
 /**
  * Retrieves the transaction history of renting for a specific product.

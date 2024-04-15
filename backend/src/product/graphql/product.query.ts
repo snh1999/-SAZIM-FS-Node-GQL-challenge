@@ -1,10 +1,11 @@
-import { FieldConfigGraphQL, IDGQ, NonNullStringGQ } from "../../constants/graphql_types";
-import ProductType from "./product.type";
-import productService from "../service/product.service";
 import { GraphQLList } from "graphql";
+
 import { AppError } from "../../utils";
+import ProductType from "./product.type";
 import TransactionsType from "./transaction.type";
+import productService from "../service/product.service";
 import transactionService from "../service/transaction.service";
+import { FieldConfigGraphQL, IDGQ, NonNullStringGQ } from "../../constants/graphql_types";
 
 const getProduct: FieldConfigGraphQL = {
     type: ProductType,
