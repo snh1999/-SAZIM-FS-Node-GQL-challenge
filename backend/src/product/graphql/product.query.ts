@@ -8,6 +8,7 @@ import transactionService from "../service/transaction.service";
 
 const getProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Any logged in user can view (Updates view count)",
     args: { id: IDGQ },
     resolve(_, args) {
         return productService.viewProduct(args.id);
@@ -16,6 +17,7 @@ const getProduct: FieldConfigGraphQL = {
 
 const previewProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Query for additional operations, when product information is needed without updating view count",
     args: { id: IDGQ },
     resolve(_, args) {
         return productService.getProductById(args.id);
@@ -24,6 +26,7 @@ const previewProduct: FieldConfigGraphQL = {
 
 const getAllProducts: FieldConfigGraphQL = {
     type: new GraphQLList(ProductType),
+    description: "List of products by all users",
     resolve() {
         return productService.getAllProducts();
     },
@@ -31,6 +34,7 @@ const getAllProducts: FieldConfigGraphQL = {
 
 const getMyProducts: FieldConfigGraphQL = {
     type: new GraphQLList(ProductType),
+    description: "All owned products of currently logged in user (created and bought)",
     resolve(_parent, _args, context) {
         if (!context.isAuthenticated) {
             throw new AppError("Unauthorized", 401);
@@ -41,6 +45,7 @@ const getMyProducts: FieldConfigGraphQL = {
 
 const getTransactionHistory: FieldConfigGraphQL = {
     type: new GraphQLList(TransactionsType),
+    description: "All transactions(rent) of product. If the product is sold, it it added as last entry",
     args: {
         id: NonNullStringGQ,
     },
@@ -54,6 +59,7 @@ const getTransactionHistory: FieldConfigGraphQL = {
 
 const getMyTransactions: FieldConfigGraphQL = {
     type: new GraphQLList(TransactionsType),
+    description: "All transactions(rent, sell, buy, lending) of currently logged in user",
     async resolve(_, args, context) {
         return await transactionService.getMyTransactions(context.user);
     },

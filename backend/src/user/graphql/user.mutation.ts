@@ -4,6 +4,7 @@ import UserService from "../service/user.service";
 
 const createUser: FieldConfigGraphQL = {
     type: UserType,
+    description: "user has to login seapartely after registration, Check `UserType` for constaints",
     args: {
         firstName: NonNullStringGQ,
         lastName: StringGQ,

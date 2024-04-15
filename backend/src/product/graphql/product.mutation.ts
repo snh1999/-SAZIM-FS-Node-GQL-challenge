@@ -7,6 +7,7 @@ import TransactionsType from "../graphql/transaction.type";
 
 const createProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Any logged in user can create",
     args: {
         title: NonNullStringGQ,
         category: { type: new GraphQLList(GraphQLString) },
@@ -25,6 +26,7 @@ const createProduct: FieldConfigGraphQL = {
 
 const updateProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Only owner (logged in) can update",
     args: {
         id: NonNullStringGQ,
         title: StringGQ,
@@ -44,6 +46,7 @@ const updateProduct: FieldConfigGraphQL = {
 
 const deleteProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Only owner (logged in) can delete",
     args: {
         id: NonNullStringGQ,
     },
@@ -57,6 +60,7 @@ const deleteProduct: FieldConfigGraphQL = {
 
 const buyProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "A product can be bought only once(Owner can not buy). Rents are unaffected for this implementation",
     args: {
         id: NonNullStringGQ,
     },
@@ -70,6 +74,8 @@ const buyProduct: FieldConfigGraphQL = {
 
 const rentProduct: FieldConfigGraphQL = {
     type: TransactionsType,
+    description:
+        "`startDate` and `endDate`  has to be a non overlapping date with existing Rent entries, Otherwise fails. Owner can not rent product.",
     args: {
         id: NonNullStringGQ,
         startDate: NonNullStringGQ,
