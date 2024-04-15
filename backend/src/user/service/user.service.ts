@@ -6,6 +6,12 @@ import { prismaClient } from "../../config/db";
 import { JWT_SECRET_KEY } from "../../constants/values";
 import { inputValidationCallback, getPrismaAppError } from "../../utils";
 
+/**
+ * Retrieves a user by their ID.
+ *
+ * @param {string} id - The ID of the user to retrieve.
+ * @return {Promise<User>} The user object if found, otherwise null.
+ */
 async function getUserById(id: string) {
     return prismaClient.user.findUnique({
         where: {
@@ -13,6 +19,13 @@ async function getUserById(id: string) {
         },
     });
 }
+
+/**
+ * Asynchronously creates a user after validating the input DTO.
+ *
+ * @param {UserDto} dto - The user data transfer object containing user information.
+ * @return {Promise} A promise that resolves with the created user or rejects with a Prisma app error.
+ */
 async function createUser(dto: UserDto) {
     return inputValidationCallback(UserDto, dto, async () => {
         const hashedPassword = _getHashedPassword(dto.password);
@@ -27,6 +40,12 @@ async function createUser(dto: UserDto) {
     });
 }
 
+/**
+ * Logs in a user with the provided email and password.
+ *
+ * @param {LoginDto} dto - The login data object containing email and password.
+ * @return {Error | TokenObject} An error if login fails, otherwise a token object.
+ */
 async function loginUser(dto: LoginDto) {
     const { email, password } = dto;
     const user = await _findByEmail(email);

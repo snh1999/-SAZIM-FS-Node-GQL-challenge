@@ -31,7 +31,6 @@ app.all(
     })
 );
 
-// Serve the GraphiQL IDE.
 app.get("/", (_req, res) => {
     if (process.env.NODE_ENV === "development") {
         res.type("html");

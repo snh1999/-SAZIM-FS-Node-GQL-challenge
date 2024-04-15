@@ -9,6 +9,13 @@ export function prismaErrorHandler(callback: Function) {
         });
 }
 
+/**
+ * Function to handle Prisma client errors and return error with appropriate message.
+ *
+ * @param {any} error - the error object (to be used for prisma client errors)
+ * @return {AppError} the appropriate AppError based on the error code (if found in known prisma errors), or the error is forwarded
+ */
+
 export function getPrismaAppError(error: any) {
     if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === "P2002") {
