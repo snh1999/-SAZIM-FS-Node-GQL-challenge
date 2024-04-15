@@ -49,7 +49,7 @@ function RenderProductCards({ paneldata }: { paneldata: any[][] }) {
                 <TabPanel key={index} value={index}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", minWidth: 600 }}>
                         {transactionList.map((transaction) => (
-                            <ProductCard key={transaction.id} product={transaction.product} productLink="/product/">
+                            <ProductCard key={transaction.id} product={transaction.product} productLink="#">
                                 <Button sx={{ display: "block", mt: 2 }} size="sm" disabled>
                                     {transaction.transactionType === "SELL" &&
                                         `AT: ${getFormattedDate(transaction?.transactionDate)}`}
