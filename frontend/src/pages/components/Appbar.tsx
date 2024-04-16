@@ -2,11 +2,12 @@ import Button from "@mui/joy/Button";
 import Typography from "@mui/joy/Typography";
 import { useColorScheme } from "@mui/joy/styles";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../config/hooks/useAuth";
 
 export default function AppBar() {
     const context = useAuth();
+    const navigate = useNavigate();
 
     return (
         <nav style={{ display: "flex", justifyContent: "space-between" }}>
@@ -19,6 +20,7 @@ export default function AppBar() {
                         sx={{ margin: 1 }}
                         onClick={() => {
                             context.logout();
+                            navigate("/login");
                         }}
                     >
                         Logout

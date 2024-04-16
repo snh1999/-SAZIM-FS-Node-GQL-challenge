@@ -1,8 +1,8 @@
+import { Box, Input } from "@mui/joy";
 import { ChangeEventHandler, useState } from "react";
 import styles from "react-day-picker/dist/style.module.css";
 import { format, isAfter, isBefore, isValid, parse } from "date-fns";
 import { DateRange, DayPicker, SelectRangeEventHandler } from "react-day-picker";
-import { Box, Input } from "@mui/joy";
 
 interface Props {
     disabledDates?: { from: Date; to: Date }[];
@@ -12,11 +12,17 @@ interface Props {
     setToValue: (value: string) => void;
 }
 
+/**
+ * Renders a date picker component with the specified disabled dates, from value, to value, and corresponding setters.
+ *
+ * @param {Readonly<Props>} disabledDates - the disabled dates for the date picker
+ * @param {useState} [fromValue, setFromValue] - useState values to set start Date
+ * @param {useState} [fromValue, setFromValue] - useState values to mark end Date
+ * @return {JSX.Element} the rendered date picker component
+ */
 export default function DatePicker({ disabledDates, fromValue, setFromValue, toValue, setToValue }: Readonly<Props>) {
     const [selectedRange, setSelectedRange] = useState<DateRange>();
     const [viewPicker, setViewPicker] = useState(false);
-
-    console.log(disabledDates);
 
     const handleFromChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         setFromValue(e.target.value);

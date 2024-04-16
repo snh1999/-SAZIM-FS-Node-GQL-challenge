@@ -2,7 +2,6 @@ import { ApolloCache } from "@apollo/client";
 import { MY_PRODUCTS_QUERY } from "../graphql/product/queries";
 import { Product } from "../constants/types/Product";
 export function updateOnNew(cache: ApolloCache<unknown>, product: Product) {
-    console.log(product);
     const { getMyProducts } = cache.readQuery({ query: MY_PRODUCTS_QUERY });
     cache.writeQuery({
         query: MY_PRODUCTS_QUERY,
@@ -20,12 +19,12 @@ export function updateOnDelete(cache: ApolloCache<unknown>, id: string) {
     });
 }
 
-export function updateOnUpdate(cache: ApolloCache<unknown>, product: Product) {
+export function updateOnUpdate(cache: ApolloCache<unknown>, editedProduct: Product) {
     const { getMyProducts } = cache.readQuery({ query: MY_PRODUCTS_QUERY });
     cache.writeQuery({
         query: MY_PRODUCTS_QUERY,
         data: {
-            getMyProducts: getMyProducts.filter((product) => product.id !== product.id).concat(product),
+            getMyProducts: getMyProducts.map((product) => (product.id !== product.id ? product : { ...editedProduct })),
         },
     });
 }

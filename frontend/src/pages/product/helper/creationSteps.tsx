@@ -2,7 +2,7 @@ import { Category } from "../../../constants/types/Product";
 import PricesField from "../../components/products/AddProductPrice";
 import ProductSummary from "../../components/products/ProductCreationSummary";
 import DescriptionField from "../../components/resuable/form_input/DescriptionField";
-import { FormInput } from "../../components/resuable/form_input/InputFeedback";
+import FormInput from "../../components/resuable/form_input/InputFeedback";
 import SelectEnum from "../../components/resuable/form_input/SelectEnum";
 
 // eslint-disable-next-line @typescript-eslint/ban-types

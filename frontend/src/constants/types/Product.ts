@@ -6,6 +6,7 @@ export enum Category {
     HOME_APPLIANCES = "Home Appliances",
     SPORTING_GOODS = "Sporting Goods",
     OUTDOOR = "Outdoor",
+    TOYS = "Toys",
 }
 
 export enum RentDuration {
@@ -31,6 +32,12 @@ export interface Product {
     view: number;
 }
 
+/**
+ * Changes the enum to the viewable values (all caps and underscore converted to normal casing)
+ *
+ * @param {Product} product - the product for which to retrieve the default value
+ * @return {Partial<Product>} the product with updated categories and rent duration
+ */
 export function getProductToDefaultValue(product: Product) {
     if (product)
         return {

@@ -1,29 +1,36 @@
-import Card from "@mui/joy/Card";
-import Sheet from "@mui/joy/Sheet";
-import CardContent from "@mui/joy/CardContent";
-import IconButton from "@mui/joy/IconButton";
-import Typography from "@mui/joy/Typography";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Product } from "../../../constants/types/Product";
-import { ConfirmationModal } from "../ConfirmationModal";
 import { useState } from "react";
-import { getFormattedDate } from "../../../utils/helper";
-import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/joy";
 import { useMutation } from "@apollo/client";
-import { DELETE_PRODUCT_MUTATION } from "../../../graphql/product/mutations";
-import RequestStateWrapper from "../containers/RequestStateWrapper";
+import { useNavigate } from "react-router-dom";
+import { Box, Card, CardContent, IconButton, Sheet, Typography } from "@mui/joy";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import { Category, Product, RentDuration } from "../../../constants/types/Product";
+import ConfirmationModal from "../ConfirmationModal";
+import { getEnumValues, getFormattedDate } from "../../../utils/helper";
 import { updateOnDelete } from "../../../config/apollo_cache";
+import RequestStateWrapper from "../containers/RequestStateWrapper";
+import { DELETE_PRODUCT_MUTATION } from "../../../graphql/product/mutations";
 
 interface Props {
-    product: Product & { categories: string };
+    product: Product;
     showDelete?: boolean;
     productLink: string;
     children?: React.ReactNode;
 }
 
+/**
+ * Renders a Product Card component necessary details, clickable card.
+ *
+ * @param {Readonly<Props>} product - The product object containing details like title, categories, price, description, and view count.
+ * @param {string} productLink - The link to navigate to when the card is clicked (TO differentiate between my product and all products page).
+ * @param {ReactNode} children - Additional components or text to be displayed within the card (eg- rent/buying info)
+ * @param {boolean} showDelete - Boolean flag to determine if the delete action should be shown.
+ * @return {JSX.Element} The JSX element representing the Product Card component.
+ */
 export default function ProductCard({ product, productLink, children, showDelete = false }: Readonly<Props>) {
     const navigate = useNavigate();
+    const categories = getEnumValues(Category, product.category);
+    const rentDuration = RentDuration[product.rentDuration];
     return (
         <Card sx={{ pl: 5, letterSpacing: 1, cursor: "pointer" }} size="lg">
             <Sheet
@@ -38,13 +45,13 @@ export default function ProductCard({ product, productLink, children, showDelete
                 onClick={() => navigate(productLink)}
             >
                 <Typography fontSize="1.7rem">{product.title}</Typography>
-                <Typography level="body-sm">Categories: {product.categories}</Typography>
+                <Typography level="body-sm">Categories: {categories}</Typography>
                 <Typography level="body-sm">
-                    Price: ${product.price} | Rent: ${product.rentPrice} {product.rentDuration}
+                    Price: ${product.price} | Rent: ${product.rentPrice} {rentDuration}
                 </Typography>
             </Sheet>
 
-            {showDelete && <DeleteProduct id={product.id} />}
+            {showDelete && <DeleteButton id={product.id} />}
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }} onClick={() => navigate(productLink)}>
                 <Typography my={2} fontSize="1.1rem" width="95%">
                     {product.description.slice(0, 200)}
@@ -67,7 +74,7 @@ export default function ProductCard({ product, productLink, children, showDelete
     );
 }
 
-function DeleteProduct({ id }: { id: string }) {
+function DeleteButton({ id }: { id: string }) {
     const [open, setOpen] = useState(false);
     const [deleteProduct, { error, loading }] = useMutation(DELETE_PRODUCT_MUTATION, {
         update: (cache, { data: deleteProduct }) => {

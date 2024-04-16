@@ -1,12 +1,13 @@
-import { Box, Button, Typography } from "@mui/joy";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { TRANSACTION_HISTORY_QUERY, VIEW_PRODUCT_QUERY } from "../../graphql/product/queries";
-import RequestStateWrapper from "../components/containers/RequestStateWrapper";
+import { Box, Button, Typography } from "@mui/joy";
+
 import useAuth from "../../config/hooks/useAuth";
+import RequestStateWrapper from "../components/containers/RequestStateWrapper";
 import { BuyProduct, RentProduct } from "../components/products/transaction/TansactionModals";
 import ProductFooter from "../components/products/transaction/ProductFooter";
+import { TRANSACTION_HISTORY_QUERY, VIEW_PRODUCT_QUERY } from "../../graphql/product/queries";
 
 export default function ViewProduct() {
     const { id } = useParams();

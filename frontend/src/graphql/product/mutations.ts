@@ -51,9 +51,12 @@ export const UPDATE_PRODUCT_MUTATION = gql`
             id
             title
             category
+            description
             price
             rentPrice
             rentDuration
+            view
+            createdAt
         }
     }
 `;

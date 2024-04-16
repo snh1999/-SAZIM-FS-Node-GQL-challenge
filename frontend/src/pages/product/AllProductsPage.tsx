@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { ALL_PRODUCTS_QUERY } from "../../graphql/product/queries";
 import RequestStateWrapper from "../components/containers/RequestStateWrapper";
 
-export default function AllProducts() {
+export default function AllProductsPage() {
     const { loading, error, data } = useQuery(ALL_PRODUCTS_QUERY, { fetchPolicy: "no-cache" });
 
     return (

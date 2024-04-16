@@ -5,9 +5,9 @@ import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import { Homepage } from "./Homepage";
 import AddProductPage from "./product/AddProductPage";
-import MyProducts from "./product/MyProducts";
-import AllProducts from "./product/AllProducts";
-import ViewProduct from "./product/ViewProduct";
+import MyProducts from "./product/MyProductsPage";
+import AllProductsPage from "./product/AllProductsPage";
+import ViewProduct from "./product/ViewProductPage";
 import EditProductPage from "./product/EditProductPage";
 import RequireAuth from "./layout/RequireAuth";
 import HistoryPage from "./HistoryPage";
@@ -20,7 +20,7 @@ const router = createBrowserRouter(
             <Route element={<RequireAuth />}>
                 <Route index element={<Homepage />} />
                 <Route path="/product">
-                    <Route index element={<AllProducts />} />
+                    <Route index element={<AllProductsPage />} />
                     <Route path="new" element={<AddProductPage />} />
                     <Route path="my" element={<MyProducts />} />
                     <Route path=":id" element={<ViewProduct />} />
@@ -34,29 +34,3 @@ const router = createBrowserRouter(
 );
 
 export default router;
-
-// const router = createBrowserRouter(
-//     createRoutesFromElements(
-// <Route path="/" element={<Root />} loader={rootLoader} action={rootAction} errorElement={<ErrorPage />}>
-//             {/* <Route errorElement={<ErrorPage />}>
-//           <Route index element={<Index />} />
-//           <Route
-//             path="contacts/:contactId"
-//             element={<Contact />}
-//             loader={contactLoader}
-//             action={contactAction}
-//           />
-//           <Route
-//             path="contacts/:contactId/edit"
-//             element={<EditContact />}
-//             loader={contactLoader}
-//             action={editAction}
-//           />
-//           <Route
-//             path="contacts/:contactId/destroy"
-//             action={destroyAction}
-//           /> */}
-//             {/* </Route> */}
-//         </Route>
-//     )
-// );

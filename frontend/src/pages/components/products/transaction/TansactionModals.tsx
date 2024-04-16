@@ -1,10 +1,11 @@
-import { useMutation } from "@apollo/client";
-import { ConfirmationModal } from "../../ConfirmationModal";
-import RequestStateWrapper from "../../containers/RequestStateWrapper";
-import { BUY_PRODUCT_MUTATION, RENT_PRODUCT_MUTATION } from "../../../../graphql/product/mutations";
-import DatePicker from "../../resuable/Datepicker";
 import { useState } from "react";
+import { useMutation } from "@apollo/client";
+
+import ConfirmationModal from "../../ConfirmationModal";
+import DatePicker from "../../resuable/Datepicker";
+import RequestStateWrapper from "../../containers/RequestStateWrapper";
 import { TRANSACTION_HISTORY_QUERY } from "../../../../graphql/product/queries";
+import { BUY_PRODUCT_MUTATION, RENT_PRODUCT_MUTATION } from "../../../../graphql/product/mutations";
 
 interface ModalProps {
     openModal: boolean;
@@ -52,7 +53,6 @@ export function RentProduct({ openModal, setOpenModal, transactionHistory, produ
     });
 
     const sortedHistory = transactionHistory?.sort((a, b) => {
-        console.log(a.rentStartDate);
         return a?.rentStartDate - (b?.rentStartDate ?? 0);
     });
 

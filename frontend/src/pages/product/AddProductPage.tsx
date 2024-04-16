@@ -20,13 +20,7 @@ export default function AddProductPage() {
 
     const [createProduct, { loading, error, data }] = useMutation(CREATE_PRODUCT_MUTATION, {
         update(cache, { data: { createProduct } }) {
-            console.log(createProduct);
             updateOnNew(cache, createProduct);
-            //     const { getMyProducts } = cache.readQuery({ query: MY_PRODUCTS_QUERY });
-            //     cache.writeQuery({
-            //         query: My_PRODUCTS_QUERY,
-            //         data: { getAllProducts: getAllProducts.concat([createProduct]) },
-            //     });
         },
     });
 

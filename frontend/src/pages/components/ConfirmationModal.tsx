@@ -14,7 +14,7 @@ interface ModalProps {
     onClick?: () => void;
 }
 
-export function ConfirmationModal({
+export default function ConfirmationModal({
     open,
     setOpen,
     dialogueText,

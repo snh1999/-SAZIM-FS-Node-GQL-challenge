@@ -1,6 +1,6 @@
 import { Box, Chip, Option, Select } from "@mui/joy";
 import { Controller, useFormContext } from "react-hook-form";
-import { InputFeedbackContainer } from "../../containers/InputFeedbackContainer";
+import { InputFeedbackContainer } from "../../containers";
 
 interface Props {
     id: string;
@@ -9,6 +9,16 @@ interface Props {
     options: object;
 }
 
+/**
+ * Generates a Select component for handling enum values with error handling.
+ * Used Controller from react-hook-form as MUI select doesnt play well with react-hook-form.
+ * uses enum values as useable strings, and uses
+ *
+ * @param {Readonly<Props>} { id, placeholder }
+ * @param {Readonly<Props>}  options - the enum object to make list of. (Make sure values have viewable case strings and not number)
+ * @param {Readonly<Props>} multiple  - flag to indicate multiple selection support, pass false to disable
+ * @return {JSX.Element} Select component for handling enum values with error handling
+ */
 export default function SelectEnum({ id, placeholder, options, multiple = true }: Readonly<Props>) {
     const {
         formState: { errors },

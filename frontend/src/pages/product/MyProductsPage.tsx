@@ -12,7 +12,7 @@ export default function MyProducts() {
     return (
         <>
             <RequestStateWrapper loading={loading} error={error?.message} dataMessage="">
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "50%", minWidth: 600 }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "45%", minWidth: 600 }}>
                     <ViewProducts
                         forMyPage={true}
                         linkPrefix="/product/my/"
