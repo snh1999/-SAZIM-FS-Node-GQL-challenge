@@ -1,3 +1,5 @@
+<!-- TODO create a table of contents -->
+
 All the network request is wrapped by [RequestStateWrapper](/src/pages/components/containers/RequestStateWrapper.tsx) to handle the loading, error/success message display.
 Forms are wrapped by [FormContainer](/src/pages/components/containers/FormContainer.tsx) to contain a similar styling and Individual Input fields are wrapped by [InputFeedBackContainer](/src/pages/components/containers/InputFeedBackContainer.tsx) to display error message feedbacks.
 
