@@ -262,3 +262,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+/backend/prisma/migrations
+/backend/prisma/seed.js
