@@ -8,7 +8,7 @@ import { RequestStateWrapper } from "./components/containers";
 import { CURRENT_USER_TRANSACTIONS_QUERY } from "../graphql/product/queries";
 
 export default function HistoryPage() {
-    const { loading, data, error } = useQuery(CURRENT_USER_TRANSACTIONS_QUERY);
+    const { loading, data, error } = useQuery(CURRENT_USER_TRANSACTIONS_QUERY, { fetchPolicy: "no-cache" });
     const allTransactions = data?.getMyTransactions;
     const {
         userData: { id },

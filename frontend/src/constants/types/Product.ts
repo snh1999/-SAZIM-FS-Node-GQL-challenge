@@ -6,6 +6,7 @@ export enum Category {
     HOME_APPLIANCES = "Home Appliances",
     SPORTING_GOODS = "Sporting Goods",
     OUTDOOR = "Outdoor",
+    TOYS = "Toys",
 }
 
 export enum RentDuration {

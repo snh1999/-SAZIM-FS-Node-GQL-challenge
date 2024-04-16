@@ -51,6 +51,8 @@ export default function ProductFooter({
                                 ? "You Bought this Product"
                                 : isSoldByUser
                                 ? "You Sold this Product"
+                                : isMyProduct
+                                ? "You own this product"
                                 : "Product Sold"}
                         </b>
                     </Typography>

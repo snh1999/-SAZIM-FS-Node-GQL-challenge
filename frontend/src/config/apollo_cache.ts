@@ -19,12 +19,12 @@ export function updateOnDelete(cache: ApolloCache<unknown>, id: string) {
     });
 }
 
-export function updateOnUpdate(cache: ApolloCache<unknown>, product: Product) {
+export function updateOnUpdate(cache: ApolloCache<unknown>, editedProduct: Product) {
     const { getMyProducts } = cache.readQuery({ query: MY_PRODUCTS_QUERY });
     cache.writeQuery({
         query: MY_PRODUCTS_QUERY,
         data: {
-            getMyProducts: getMyProducts.filter((product) => product.id !== product.id).concat(product),
+            getMyProducts: getMyProducts.map((product) => (product.id !== product.id ? product : { ...editedProduct })),
         },
     });
 }

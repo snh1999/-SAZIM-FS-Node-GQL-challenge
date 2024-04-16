@@ -29,7 +29,6 @@ interface Props {
  */
 export default function ProductCard({ product, productLink, children, showDelete = false }: Readonly<Props>) {
     const navigate = useNavigate();
-    console.log(product);
     const categories = getEnumValues(Category, product.category);
     const rentDuration = RentDuration[product.rentDuration];
     return (

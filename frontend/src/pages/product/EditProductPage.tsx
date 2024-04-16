@@ -12,7 +12,7 @@ import RequestStateWrapper from "../components/containers/RequestStateWrapper";
 
 export default function EditMyProduct() {
     const { id } = useParams();
-    const { loading, error, data } = useQuery(PREVIEW_PRODUCT_QUERY, { variables: { id } });
+    const { loading, error, data } = useQuery(PREVIEW_PRODUCT_QUERY, { variables: { id }, fetchPolicy: "no-cache" });
     const product = getProductToDefaultValue(data?.getProduct);
 
     const methods = useForm({

@@ -26,7 +26,7 @@ export default function ViewProducts({ products, title, linkPrefix, forMyPage = 
     }
     return (
         <PositionElement>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 600 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2, width: "100%", minWidth: 600 }}>
                 <Typography sx={{ textAlign: "center", fontSize: "2.2rem", fontWeight: "300" }}>{title}</Typography>
                 {products.map((product) => (
                     <ProductCard
