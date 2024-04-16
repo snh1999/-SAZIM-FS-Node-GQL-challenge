@@ -1,4 +1,4 @@
-### Features Tracker and other details (click to expand)
+### Features Tracker and other details 
 
 #### Technology Choices
 
