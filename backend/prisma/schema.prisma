@@ -34,6 +34,7 @@ enum Category {
   HOME_APPLIANCES
   SPORTING_GOODS
   OUTDOOR
+  TOYS
 }
 
 enum RentDuration {

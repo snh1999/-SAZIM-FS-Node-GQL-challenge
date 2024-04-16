@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import JWT from "jsonwebtoken";
 import { JWT_SECRET_KEY } from "../constants/values";
 
+/**
+ * Middleware function to attach. `isAuthenticated` and `userId` to express request body
+ *
+ */
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.get("Authorization");
     if (authHeader) {

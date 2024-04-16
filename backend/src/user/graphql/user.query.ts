@@ -1,6 +1,6 @@
-import { FieldConfigGraphQL, IDGQ, NonNullStringGQ } from "../../constants/graphql_types";
-import UserType, { AuthResponseType } from "./user.type";
 import userService from "../service/user.service";
+import UserType, { AuthResponseType } from "./user.type";
+import { FieldConfigGraphQL, IDGQ, NonNullStringGQ } from "../../constants/graphql_types";
 
 const user: FieldConfigGraphQL = {
     type: UserType,

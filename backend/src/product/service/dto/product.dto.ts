@@ -1,6 +1,5 @@
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-
 import { Category, RentDuration } from "@prisma/client";
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class ProductDto {
     @IsString()

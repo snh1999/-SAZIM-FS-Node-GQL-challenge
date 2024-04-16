@@ -1,15 +1,17 @@
-import ProductType from "./product.type";
-import { FieldConfigGraphQL, IntegerGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
-import productService from "../service/product.service";
 import { GraphQLList, GraphQLString } from "graphql";
-import transactionService from "../service/transaction.service";
+
+import ProductType from "./product.type";
 import TransactionsType from "../graphql/transaction.type";
+import productService from "../service/product.service";
+import transactionService from "../service/transaction.service";
+import { FieldConfigGraphQL, IntegerGQ, NonNullStringGQ, StringGQ } from "../../constants/graphql_types";
 
 const createProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Any logged in user can create",
     args: {
         title: NonNullStringGQ,
-        category: { type: GraphQLList(GraphQLString) },
+        category: { type: new GraphQLList(GraphQLString) },
         description: NonNullStringGQ,
         price: IntegerGQ,
         rentPrice: IntegerGQ,
@@ -25,10 +27,11 @@ const createProduct: FieldConfigGraphQL = {
 
 const updateProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Only owner (logged in) can update",
     args: {
         id: NonNullStringGQ,
         title: StringGQ,
-        category: { type: GraphQLList(GraphQLString) },
+        category: { type: new GraphQLList(GraphQLString) },
         description: StringGQ,
         price: IntegerGQ,
         rentPrice: IntegerGQ,
@@ -44,6 +47,7 @@ const updateProduct: FieldConfigGraphQL = {
 
 const deleteProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "Only owner (logged in) can delete",
     args: {
         id: NonNullStringGQ,
     },
@@ -57,6 +61,7 @@ const deleteProduct: FieldConfigGraphQL = {
 
 const buyProduct: FieldConfigGraphQL = {
     type: ProductType,
+    description: "A product can be bought only once(Owner can not buy). Rents are unaffected for this implementation",
     args: {
         id: NonNullStringGQ,
     },
@@ -70,6 +75,8 @@ const buyProduct: FieldConfigGraphQL = {
 
 const rentProduct: FieldConfigGraphQL = {
     type: TransactionsType,
+    description:
+        "`startDate` and `endDate`  has to be a non overlapping date with existing Rent entries, Otherwise fails. Owner can not rent product.",
     args: {
         id: NonNullStringGQ,
         startDate: NonNullStringGQ,

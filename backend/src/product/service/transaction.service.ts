@@ -1,8 +1,14 @@
 import { TransactionType } from "@prisma/client";
-import { prismaClient } from "../../config/db";
 import { AppError } from "../../utils";
 import productService from "./product.service";
+import { prismaClient } from "../../config/db";
 
+/**
+ * Retrieves the transaction history of renting for a specific product.
+ *
+ * @param {string} productId - The ID of the product for which to retrieve the transaction history.
+ * @return {Promise<Transaction[]>} An array of transactions representing the rent history for the specified product.
+ */
 async function getRentTransactionHistory(productId: string) {
     return await prismaClient.transaction.findMany({
         where: {
@@ -14,6 +20,13 @@ async function getRentTransactionHistory(productId: string) {
     });
 }
 
+/**
+ * Check the product status, update the owner if the new buyer is different (throw error if same as owner), and create a sell transaction.
+ *
+ * @param {string} productId - The ID of the product being bought.
+ * @param {string} newBuyerId - The ID of the new buyer.
+ * @return {Promise<Product>} The updated product after the transaction.
+ */
 async function buyProduct(productId: string, newBuyerId: string) {
     // check if there is any sell entry in transaction
     await _checkProductStatus(productId);
@@ -46,6 +59,15 @@ async function buyProduct(productId: string, newBuyerId: string) {
     });
 }
 
+/**
+ * Rent a product for a specified duration (Non overlapping with the exisitng rents).
+ *
+ * @param {string} productId - The ID of the product to rent.
+ * @param {string} userId - The ID of the user renting the product.
+ * @param {Date} startDate - The start date of the rent.
+ * @param {Date} endDate - The end date of the rent.
+ * @return {Promise<Transaction>} A Promise that resolves to the created transaction.
+ */
 async function rentProduct(productId: string, userId: string, startDate: Date, endDate: Date) {
     if (endDate < startDate) throw new AppError("Invalid Rent Duration", 400);
 
@@ -78,6 +100,12 @@ async function rentProduct(productId: string, userId: string, startDate: Date, e
     });
 }
 
+/**
+ * Retrieves all transactions for a specific user.
+ *
+ * @param {string} userId - The ID of the user to retrieve transactions for
+ * @return {Promise<Transaction[]>} A list of transactions associated with the user
+ */
 async function getMyTransactions(userId: string) {
     return await prismaClient.transaction.findMany({
         where: {
@@ -100,6 +128,13 @@ async function getMyTransactions(userId: string) {
     });
 }
 
+/**
+ * Check the validity of a rent transaction(Non overlapping to other exising rents).
+ *
+ * @param {string} productId - The ID of the product for the rent transaction
+ * @param {Date} startDate - The start date of the rent transaction
+ * @param {Date} endDate - The end date of the rent transaction
+ */
 async function _checkRentValidity(productId: string, startDate: Date, endDate: Date) {
     const sortedRentHistory = (await getRentTransactionHistory(productId)).sort((a, b) => {
         return a.rentStartDate!.getTime() - b.rentStartDate!.getTime();
@@ -130,6 +165,12 @@ async function _getProductOwner(productId: string) {
     return product.ownerId;
 }
 
+/**
+ * Asynchronously checks if a product with the given ID has been sold.
+ *
+ * @param {string} productId - The ID of the product to check.
+ * @return {Promise<Transaction>} A promise that resolves to the first transaction record if the product has been sold, otherwise null.
+ */
 async function checkIfSold(productId: string) {
     return await prismaClient.transaction.findFirst({
         where: {

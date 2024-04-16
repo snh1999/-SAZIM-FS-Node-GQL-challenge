@@ -1,5 +1,5 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { AppError } from "./errorHandler";
+import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@prisma/client/runtime/library";
 
 export function prismaErrorHandler(callback: Function) {
     return Promise.resolve(callback())
@@ -8,6 +8,13 @@ export function prismaErrorHandler(callback: Function) {
             return getPrismaAppError(error);
         });
 }
+
+/**
+ * Function to handle Prisma client errors and return error with appropriate message.
+ *
+ * @param {any} error - the error object (to be used for prisma client errors)
+ * @return {AppError} the appropriate AppError based on the error code (if found in known prisma errors), or the error is forwarded
+ */
 
 export function getPrismaAppError(error: any) {
     if (error instanceof PrismaClientKnownRequestError) {
@@ -25,6 +32,9 @@ export function getPrismaAppError(error: any) {
         }
         console.log(error);
         return new AppError(`Invalid Input`, 409);
+    }
+    if (error instanceof PrismaClientValidationError) {
+        return new AppError("Please check input values and try again", 400);
     }
     return error;
 }

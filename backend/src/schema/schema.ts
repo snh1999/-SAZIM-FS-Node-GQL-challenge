@@ -1,4 +1,5 @@
 import { GraphQLObjectType, GraphQLSchema } from "graphql";
+
 import { userMutation, userQuery } from "../user";
 import { productMutation, productQuery } from "../product";
 
